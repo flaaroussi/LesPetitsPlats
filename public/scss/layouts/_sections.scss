@@ -1,0 +1,70 @@
+
+//style page index.
+.dashboard-photographers{
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   //space between column gap and row gap.
+   grid-gap: 3rem;
+   margin-bottom: 3rem;
+   article{
+      text-align: center;
+   }
+   @include responsive(smartphone){
+      grid-template-columns: 1fr;
+   }
+ }
+
+//style page photographer
+.photographer-profil{
+   display: flex;
+   justify-content: space-between;
+   background-color: $color4 ;
+   padding:2rem;
+   margin-bottom: 2rem;
+}
+
+//section media
+.photographer-media{
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   grid-gap: 3rem;
+   margin-bottom: 4rem;
+    //responsive design page photographe
+    @include responsive(smartphone){
+      grid-template-columns: 1fr;
+   }
+ }
+
+.media-card{
+   width: 100%;
+   .media{
+      width:100%;
+      border-radius: 4px;
+   }
+   img,
+   video{
+      width: 100%;
+      height: 18rem;
+      object-fit: cover;
+      border-radius: 4px;
+   }
+
+   .media-footer{
+      @include flex (row, space-between, center);
+      padding-top: 0.2rem;
+      .fa-heart,
+      span{
+         font-size: 1rem;
+      }
+      .fa-heart,
+      span,
+      h2{
+         color :$color1;
+      }
+      .fa-heart,
+      span{
+         cursor: pointer;
+      }
+   }
+}
+

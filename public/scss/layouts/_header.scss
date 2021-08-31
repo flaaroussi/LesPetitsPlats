@@ -1,0 +1,48 @@
+.header{
+  margin-top: 20px;
+  margin-bottom: 40px;
+  h1{
+    font-size: 1.4rem;
+    width: fit-content;
+  }
+  img{
+    width:20rem
+  }
+   @include flex (row, space-between, center);
+   flex-wrap: nowrap;
+   .header-nav{
+    @include flex (row, space-between, center);
+   }
+   @include responsive(smartphone){
+       &-acceuil{
+        margin-bottom: 100px;
+       }
+       
+        img{
+          width:16rem
+          
+        }
+        figure{
+          
+        }
+        h1{
+         font-size: 1rem; 
+         
+        }
+        nav{
+          position: absolute;
+          top: 100px;
+          width:100%;
+          text-align: center;
+          .filtres{
+            width: 70%;
+            margin: auto;
+            li{
+              padding-bottom:6px ;
+            }
+          }       
+        }
+  }
+}
+  
+  
