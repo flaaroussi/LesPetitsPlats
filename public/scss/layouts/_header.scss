@@ -1,48 +1,36 @@
-.header{
-  margin-top: 20px;
-  margin-bottom: 40px;
-  h1{
-    font-size: 1.4rem;
-    width: fit-content;
-  }
+.logo-container{
+  margin-top: 4rem;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
   img{
-    width:20rem
-  }
-   @include flex (row, space-between, center);
-   flex-wrap: nowrap;
-   .header-nav{
-    @include flex (row, space-between, center);
-   }
-   @include responsive(smartphone){
-       &-acceuil{
-        margin-bottom: 100px;
-       }
-       
-        img{
-          width:16rem
-          
-        }
-        figure{
-          
-        }
-        h1{
-         font-size: 1rem; 
-         
-        }
-        nav{
-          position: absolute;
-          top: 100px;
-          width:100%;
-          text-align: center;
-          .filtres{
-            width: 70%;
-            margin: auto;
-            li{
-              padding-bottom:6px ;
-            }
-          }       
-        }
+    width: 350px;
+    height: 100%;
+    object-fit: cover;
   }
 }
-  
-  
+//Barre de recherche.
+.barreRecherche-container{
+  width: 100%;
+  input{
+    width: 100%;
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: $color2 ;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    
+  }
+ 
+  .fas{
+    font-size: 1.6rem;
+    position: relative;
+    top:-38px;
+    left: 97%;
+    
+  }
+}

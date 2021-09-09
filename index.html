@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,13 +8,47 @@
    <link rel="shortcut icon" href="favicon.png" type="image/png">
    <script src="https://kit.fontawesome.com/413ec6d2d3.js" crossorigin="anonymous"></script>
    <link rel="stylesheet" href="public/css/main.css" />
-   <title>xxxxx</title>
+   <title>Les petits plats</title>
 </head>
+
 <body>
-   
+   <header>
+      <!--logo-->
+      <section class="logo-container">
+         <figure>
+            <img src="/public/images/logo/les_petites_plats.png" alt="Les petits plats logo">
+         </figure>
+      </section>
+   </header>
+   <br><br><br><br>
+   <main>
+      <!--Réalisation d'un filtre selon 2 axes-->
+
+      <!--Axe1 de recherche:Barre de recherche horizontale-->
+      <section class="barreRecherche-container">
+         <input type="search" id="barreRecherche" name="barreRecherche" aria-label="Rechercher dans les recettes suivantes"
+            placeholder="Rechercher un ingrédient,appareil,ustensiles ou une recettes">
+         <i class="fas fa-search"></i>
+      </section>
 
 
+      <div class="tag">tag</div>
 
-   <script type="module" src="public/js/main.js"></script>
+      <!--Axe2 de Recherche :par mots:titre ingredients ustentils-->
+      <section>
+
+      </section>
+
+      <br><br><br><br>
+
+      <!--Blocs des recettes-->
+      <section id="recipes_container">
+         <!--code : affichage blocs recettes-->
+      </section>
+   </main>
+
+   <script src="./data/recipes.js"></script>
+   <script type="module" src="./public/js/main.js"></script>
 </body>
+
 </html>

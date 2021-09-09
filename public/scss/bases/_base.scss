@@ -5,12 +5,9 @@ html {
 
 body {
    font-size: 0.75rem; /* 12px */
-   width: 90%;
+   width: 80%;
    margin: auto;
    font-family: Arial, DM+Sans, sans-serif;
-   @include responsive(smartphone){
-      width: 94%;
-   }
 }
 
 * {
@@ -22,10 +19,7 @@ body {
    line-height: 1.2rem;  
 }
 
-h1 {
-   font-size: 2em; /* 24px */
-   color:$color1;
-}
+
  
 img{
    object-fit: cover;
@@ -39,19 +33,3 @@ a{
    text-decoration: none;
 }
 
-.filtres{
-   @include flex (row, center, center);
-   @include responsive(smartphone){
-      flex-wrap: wrap;
-   }
-   li{
-      margin-right:0.3rem; 
-      font-size: 0.8rem;     
-   }
-   li:last-child{
-      margin-right: 0;
-   }
-   &__direction{
-      justify-content: left;
-   }
-}
