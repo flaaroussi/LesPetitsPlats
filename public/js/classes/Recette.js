@@ -13,6 +13,7 @@ export default class Recipe{
       this.recipes = recipes;
       this.displayRecipes(recipes);
       this.enterMot();
+      
     
    }
 
@@ -25,7 +26,7 @@ export default class Recipe{
       article.className = "recipe-card";
       article.innerHTML = this.getTemplateRecipe(currentRecipe);
       elt.appendChild(article);
-
+      //this.multiligneEllipsis(article)
       })
    }
 
@@ -74,9 +75,12 @@ export default class Recipe{
          })
          
          //Element ou sera affichée la description de la recette.
-         template+=`</div>
-         <p class="description">${recipes.description}</p></div>`;
-
+            
+            template+=`</div>
+            <p class="description textEllipsis">${recipes.description}</p></div>     
+            `;
+            
+      
       return template;
    }
   
@@ -87,7 +91,7 @@ export default class Recipe{
     */
    enterMot(){
       let elt = document.getElementById("barreRecherche");
-   
+      elt.value = "";
       elt.addEventListener('input', e =>{
          //Controler le mot saisi
          this.filterRecipes(elt.value);
@@ -95,14 +99,12 @@ export default class Recipe{
 
    }
 
+
    isIngredientsHaveTag(ingredients, tag){
-      let listIngredientsHaveTag = ingredients.forEach(currentIngredient => Utils.toLawer(currentIngredient.ingredient).includes(tag) );
-      if(listIngredientsHaveTag.length){
-         return true;
-      }else{
-         return false;
-      }
+      let resulat = ingredients.some(currentIngredient => Utils.toLawer(currentIngredient.ingredient).includes(tag));
+      return resulat;     
    }
+
    /**
     * 
     * @param {*} tag 
@@ -113,12 +115,10 @@ export default class Recipe{
          tag = Utils.toLawer(tag);
          recipesTag = this.recipes.filter(currentRecipe => {
             // filtre sur le nom
-            let nom = Utils.toLawer(currentRecipe.nom);
-            
+            let nom = Utils.toLawer(currentRecipe.nom);            
             let description = Utils.toLawer(currentRecipe.description);
-
+                        
             if(nom.includes(tag) || description.includes(tag) || this.isIngredientsHaveTag(currentRecipe.ingredients, tag)){
-               alert('ok')
                return true;
             }else{
                return false;
@@ -134,6 +134,21 @@ export default class Recipe{
      //Afficher les recettes triées.
       this.displayRecipes(recipesTag);
    }
+
+   multiligneEllipsis (elt){
+      //let elt = document.querySelector('description');
+      let textOrigin = elt.querySelector('.description');
+      let textOriginContenu = textOrigin.textContent;
+      let text = "";
+      alert('1')
+      console.log(textOriginContenu.indexOf('...'))
+      console.log(textOrigin.clientHeight+'--'+textOrigin.offsetHeight)
+      while(textOrigin.scrollHeigt >= textOrigin.offsetHeight){
+         text = textOriginContenu.substring(0, 100)
+      }
+      textOrigin.innerHTML = textOriginContenu.substring(0, 100) + '...'
+     }
+
    
 }
 

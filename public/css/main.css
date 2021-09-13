@@ -8,7 +8,7 @@ html {
 body {
   font-size: 0.75rem;
   /* 12px */
-  width: 80%;
+  width: 90%;
   margin: auto;
   font-family: Arial, DMSans, sans-serif;
 }
@@ -85,7 +85,7 @@ a {
   border-bottom-left-radius: 0.4rem;
   border-bottom-right-radius: 0.4rem;
   background-color: #ededed;
-  height: 400px;
+  min-height: 400px;
 }
 
 .title-time-recipe {
@@ -116,6 +116,78 @@ a {
   padding-left: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
+}
+
+nav {
+  width: 100%;
+  margin: 0;
+}
+nav .menu {
+  list-style-type: none;
+  width: 50%;
+  height: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.6rem;
+}
+nav li {
+  height: 100%;
+  padding-left: 1rem;
+}
+nav li a {
+  text-decoration: none;
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 1rem;
+}
+
+.liste-ingredients--title {
+  background-color: #118df4;
+}
+
+.liste-appareil {
+  background-color: #2af1a2;
+  display: flex;
+  /** Si on a n'a pas besoin de flex direction cet attribut ne dois pas etre affiché*/
+  flex-direction: row;
+  /** si le pramettre  $justify-content égale à 0 >> on utilise pas l'attribut justify-content */
+  justify-content: space-between;
+  align-items: center;
+}
+
+.liste-ustentiles {
+  background-color: #ff6347;
+}
+
+.sous-ingredient,
+.sous-appareil,
+.sous-ustensiles {
+  width: 100%;
+}
+
+nav a:hover {
+  color: orange;
+}
+
+.sous-ingredient:hover {
+  display: block;
+}
+
+.sous-appareil:hover {
+  display: block;
+}
+
+.sous-ustensiles :hover {
+  display: block;
+}
+
+.textEllipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 120px;
 }
 
 .access-main {

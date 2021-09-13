@@ -18,7 +18,7 @@
    border-bottom-left-radius: 0.4rem;
    border-bottom-right-radius: 0.4rem;
    background-color: $color2;
-   height: 400px;
+   min-height: 400px;
 }
 //titre et temps de la recette
 .title-time-recipe{
@@ -45,4 +45,90 @@
    padding-right: 1rem;
    padding-bottom: 1rem;
 }
+
+
+//recherche avancée
+nav{
+   width: 100%;
+   margin: 0;
+   .menu{
+      list-style-type: none;
+     
+      width: 50%;
+      height: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 0.6rem;
+      
+   }
+   li{
+      height: 100%;
+      padding-left: 1rem;
+      
+      a{
+         text-decoration: none;
+         text-align: center;
+         color :#FFFFFF;
+         font-size: 1rem;
+      }
+   }
+}
+.liste-ingredients--title{
+  
+   background-color:#118df4 ;  
+}
+
+.liste-appareil{
+   background-color:#2af1a2;
+   @include flex (row, space-between, center)
+}
+.liste-ustentiles{
+   background-color:#ff6347 ;
+}
+
+//cache le sous menu ou sont affichées les infos de la 1er recherche
+.sous-ingredient,
+.sous-appareil,
+.sous-ustensiles{
+  
+   width: 100%;
+}
+
+nav a:hover{
+   color: orange;
+}
+
+.sous-ingredient:hover{
+   display: block;
+  
+}
+.sous-appareil:hover{
+   display: block;
+  
+}
+.sous-ustensiles :hover{
+   display: block;
+  
+}
+
+
+
+
+//Ranger les lignes depassant le conteneur de la description d'une recette.
+
+.textEllipsis{
+display: -webkit-box;
+-webkit-line-clamp: 6;
+//Pour -webkit-box-orient:vertical l'agrandissement et la réduction concernera le "height" et la 
+//taille initiale sera la valeur calculée de height.
+//La taille finale prendra en compte le min-height ou le max-height, s'il est spécifié.
+-webkit-box-orient: vertical;
+overflow: hidden;
+text-overflow: ellipsis;
+max-height: 120px;
+}
+
+
+
+
 
