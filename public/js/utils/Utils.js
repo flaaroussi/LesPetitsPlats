@@ -7,15 +7,14 @@ export default class Utils {
       }else{
          return  "";
       }
+   }
       
-   }
+      
+   static creatEltHtml(tagName, classTag){
+      let tag = document.createElement(tagName);
+      tag.className = classTag;
+      
 
-   static multiligneEllipsis(elt){
-      let text = elt.value
-      while(elt.scrollHeight > elt.offsetHeight){
-         text = text.substr(0, text.length-1);
-      }
-      elt.innerHTML = text + '...';
+      return tag;
    }
-   
 }

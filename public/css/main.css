@@ -124,7 +124,7 @@ nav {
 }
 nav .menu {
   list-style-type: none;
-  width: 50%;
+  width: 60%;
   height: 3rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -132,53 +132,73 @@ nav .menu {
 }
 nav li {
   height: 100%;
-  padding-left: 1rem;
-}
-nav li a {
   text-decoration: none;
-  text-align: center;
   color: #FFFFFF;
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
-.liste-ingredients--title {
+.blocs-filtre {
+  border-radius: 0.2rem;
+  position: relative;
+}
+.blocs-filtre--ingredient {
   background-color: #118df4;
 }
-
-.liste-appareil {
+.blocs-filtre--appareil {
   background-color: #2af1a2;
+}
+.blocs-filtre--ustentiles {
+  background-color: #ff6347;
+}
+.blocs-filtre .title-icone {
   display: flex;
   /** Si on a n'a pas besoin de flex direction cet attribut ne dois pas etre affiché*/
   flex-direction: row;
   /** si le pramettre  $justify-content égale à 0 >> on utilise pas l'attribut justify-content */
   justify-content: space-between;
   align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.blocs-filtre .bloc-search-resultat {
+  padding-left: 1rem;
+  position: absolute;
+  visibility: hidden;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  top: 60px;
+  z-index: 10;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 200%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.6rem;
+}
+.blocs-filtre .bloc-search-resultat--ingredient {
+  background-color: #118df4;
+}
+.blocs-filtre .bloc-search-resultat--appareil {
+  background-color: #2af1a2;
 }
 
-.liste-ustentiles {
-  background-color: #ff6347;
+.filte-open > .bloc-search-resultat {
+  visibility: visible !important;
+}
+.filte-open.blocs-filtre {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
-.sous-ingredient,
-.sous-appareil,
-.sous-ustensiles {
-  width: 100%;
+.saisiTag {
+  visibility: hidden;
+  border: none;
+  padding: 0;
+  padding-left: 1rem;
 }
 
-nav a:hover {
-  color: orange;
-}
-
-.sous-ingredient:hover {
-  display: block;
-}
-
-.sous-appareil:hover {
-  display: block;
-}
-
-.sous-ustensiles :hover {
-  display: block;
+.bloc-search {
+  height: 60px;
 }
 
 .textEllipsis {

@@ -36,37 +36,60 @@
 
       <!--Axe2 de recherche avancée :par mots:titre ingredients ustentils-->
       <section>
-         <nav class="search-mot">
+
+         <nav>
             <ul class="menu">
-               <li>                 
-                  <div class="liste-ingredients--title">
-                     <input type="text" placeholder="ssaisser un mot">
-                     <a href="#">Ingredients</a>
-                     <i class="fas fa-chevron-down"></i></a>
+
+               <li class="blocs-filtre blocs-filtre--ingredient  filte-open">                  
+                  <div class="bloc-search">
+                     <input class="saisiTag" type="text" placeholder="Rechercher un ingrédient">
+                     <div class ="title-icone">
+                        <p>Ingredients</p>
+                        <i class="fas fa-chevron-down"></i>
+                     </div> 
+                  </div>  
+                  <ul class="bloc-search-resultat bloc-search-resultat--ingredient">
+                     <!--   -->
+                  </ul>
+               </li>
+
+               <li class="blocs-filtre blocs-filtre--appareil">
+                  <div class="bloc-search">
+                     <input class="saisiTag" type="text" placeholder="Rechercher un appareil">
+                     <div class ="title-icone">
+                        <p>Appareil</p>
+                        <i class="fas fa-chevron-down"></i>
+                     </div>
                   </div>
-                  
-                  <ul class="sous-ingredient">
-                     <li>ddddd</li>
+                  <ul class="bloc-search-resultat bloc-search-resultat--appareil ">
+                    
                   </ul>
-               </li>   
-               <li class="liste-appareil"><a href="#">Appareil<i class="fas fa-chevron-down"></i></a>
-                  <ul class="sous-appareil">
-                     <li>cccccc</li>
+               </li>
+               
+               <li class="blocs-filtre blocs-filtre--ustentiles">                  
+                  <div class="bloc-search">
+                     <input class="saisiTag" type="text" placeholder="Rechercher un ustentiles">
+                     <div class ="title-icone">
+                        <p>Ustentiles</p>
+                        <i class="fas fa-chevron-down"></i>
+                     </div> 
+                  </div>  
+                  <ul class="">
+                     <!--   -->
                   </ul>
-               </li> 
-               <li class=liste-ustentiles><a href="#">Ustentiles<i class="fas fa-chevron-down"></i></a>
-                  <ul class="sous-ustensiles">
-                     <li>ggggggg</li>
-                  </ul>
-               </li> 
+               </li>
+
             </ul>
          </nav>
+
+         <br><br><br><br>
+
+         
       </section>
 
       <br><br><br><br>
       
-    
-         <br><br><br><br>
+  
       <!--Blocs des recettes-->
       <section id="recipes_container">
          <!--code : affichage blocs recettes-->
