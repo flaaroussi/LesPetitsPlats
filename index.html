@@ -32,18 +32,17 @@
       </section>
 
 
-      <div class="tag">tag</div>
+      <section class="filtter-tags"></section>
 
       <!--Axe2 de recherche avancée :par mots:titre ingredients ustentils-->
       <section>
-
          <nav>
-            <ul class="menu">
 
-               <li class="blocs-filtre blocs-filtre--ingredient  filte-open">                  
+            <ul class="menu">
+               <li class="blocs-filtre blocs-filtre--ingredient">                  
                   <div class="bloc-search">
                      <input class="saisiTag" type="text" placeholder="Rechercher un ingrédient">
-                     <div class ="title-icone">
+                     <div class ="title-icone " data-parent=".blocs-filtre--ingredient">
                         <p>Ingredients</p>
                         <i class="fas fa-chevron-down"></i>
                      </div> 
@@ -56,25 +55,25 @@
                <li class="blocs-filtre blocs-filtre--appareil">
                   <div class="bloc-search">
                      <input class="saisiTag" type="text" placeholder="Rechercher un appareil">
-                     <div class ="title-icone">
+                     <div class ="title-icone" data-parent=".blocs-filtre--appareil">
                         <p>Appareil</p>
                         <i class="fas fa-chevron-down"></i>
                      </div>
                   </div>
-                  <ul class="bloc-search-resultat bloc-search-resultat--appareil ">
-                    
+                  <ul class="bloc-search-resultat bloc-search-resultat--appareil">
+                    <!--   -->
                   </ul>
                </li>
                
-               <li class="blocs-filtre blocs-filtre--ustentiles">                  
+               <li class="blocs-filtre blocs-filtre--ustensiles ">                  
                   <div class="bloc-search">
-                     <input class="saisiTag" type="text" placeholder="Rechercher un ustentiles">
-                     <div class ="title-icone">
-                        <p>Ustentiles</p>
+                     <input class="saisiTag" type="text" placeholder="Rechercher un ustensiles">
+                     <div class ="title-icone" data-parent=".blocs-filtre--ustensiles">
+                        <p>Ustensiles</p>
                         <i class="fas fa-chevron-down"></i>
                      </div> 
                   </div>  
-                  <ul class="">
+                  <ul class="bloc-search-resultat bloc-search-resultat--ustensiles">
                      <!--   -->
                   </ul>
                </li>

@@ -76,7 +76,7 @@ nav{
    &--appareil{
       background-color:#2af1a2;
    }
-   &--ustentiles{
+   &--ustensiles{
       background-color:#ff6347;
    }
    .title-icone{
@@ -104,12 +104,15 @@ nav{
       }
       &--appareil{
          background-color:#2af1a2;
-      }      
+      }  
+      &--ustensiles{
+         background-color:#ff6347;
+      }         
    }
    
 }
 
-.filte-open{
+.filtre-open{
    >.bloc-search-resultat{
       visibility: visible !important;
    } 

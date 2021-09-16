@@ -147,7 +147,7 @@ nav li {
 .blocs-filtre--appareil {
   background-color: #2af1a2;
 }
-.blocs-filtre--ustentiles {
+.blocs-filtre--ustensiles {
   background-color: #ff6347;
 }
 .blocs-filtre .title-icone {
@@ -181,11 +181,14 @@ nav li {
 .blocs-filtre .bloc-search-resultat--appareil {
   background-color: #2af1a2;
 }
+.blocs-filtre .bloc-search-resultat--ustensiles {
+  background-color: #ff6347;
+}
 
-.filte-open > .bloc-search-resultat {
+.filtre-open > .bloc-search-resultat {
   visibility: visible !important;
 }
-.filte-open.blocs-filtre {
+.filtre-open.blocs-filtre {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }

@@ -13,13 +13,18 @@ export default class Recipe {
       this.recipes = recipes;
       this.displayRecipes(recipes);
       this.enterMot();
+      this.doAttachClickToFiltre();
+
    }
 
    //afficher les 50 recettes.
    displayRecipes(recipes) {
       let elt = document.getElementById("recipes_container");
       elt.innerHTML = "";
-      document.querySelector(".bloc-search-resultat").innerHTML = "";
+      //vider les elements ingredients+ustensiles+appareils.
+      document.querySelector(".bloc-search-resultat--ingredient").innerHTML = "";
+      document.querySelector(".bloc-search-resultat--appareil").innerHTML = "";
+      document.querySelector(".bloc-search-resultat--ustensiles").innerHTML = "";
 
       recipes.forEach(currentRecipe => {
          let article = document.createElement("article");
@@ -27,6 +32,7 @@ export default class Recipe {
          article.innerHTML = this.getTemplateRecipe(currentRecipe);
          elt.appendChild(article);
       })
+
    }
 
    /**
@@ -71,12 +77,23 @@ export default class Recipe {
             </div>
             `
          this.doDisplayIngredient(currentIngredient.ingredient);
+
+
       })
+
+      //Afficher les appareils dans le btn appareil
+      this.doDisplayAppareil(recipes.appareil);
+      //
+      this.doDisplayUstensiles(recipes.ustensiles);
+      
 
       //Element ou sera affichée la description de la recette.
       template += `</div>
             <p class="description textEllipsis">${recipes.description}</p></div>`;
       return template;
+
+
+
    }
 
    /**
@@ -99,7 +116,7 @@ export default class Recipe {
     */
    isIngredientsHaveTag(ingredients, tag) {
       let resultat = ingredients.some(currentIngredient => Utils.toLawer(currentIngredient.ingredient).includes(tag));
-     
+
       return resultat;
 
    }
@@ -128,36 +145,80 @@ export default class Recipe {
          //Afficher toutes les recettes.
          recipesTag = this.recipes;
       }
-      //Afficher les recettes triées.
+      //Afficher les recettes triées par tag.
       this.displayRecipes(recipesTag);
+
+      
+
 
    }
 
    //Afficher ingredient de la recherche 1 dans les btn du recheche2
-
    doDisplayIngredient(ingredient) {
       let elt = document.querySelector(".bloc-search-resultat--ingredient");
-      console.log(ingredient)
-      //elt.innerHTML = "";
-      
       let li = Utils.creatEltHtml("li", "search-ingredient");
       li.innerHTML = ingredient;
-
       elt.appendChild(li);
 
    }
 
-   doDisplayAppareil(recipes) {
-      
+   doDisplayAppareil(appareils) {
       let elt = document.querySelector(".bloc-search-resultat--appareil");
-      recipes.appareil.forEach(currentAppareil => {
-         let li = Utils.creatEltHtml("li", "search-appareil");
-         li.innerHTML = currentAppareil;
-         console.log(currentAppareil);
-         elt.appendChild(li);
-      });
+      let li = Utils.creatEltHtml("li", "search-appareil");
+      li.innerHTML = appareils;
+      elt.appendChild(li);
+   }
+
+   doDisplayUstensiles(ustensiles) {
+      let elt = document.querySelector(".bloc-search-resultat--ustensiles");
+      if(ustensiles){
+         ustensiles.forEach(currentUstensiles =>{
+            let li = Utils.creatEltHtml("li", "search-appareil");
+            li.innerHTML = currentUstensiles;
+           elt.appendChild(li);
+         })
+      }
       
-   }  
+   }
+
+
+   //attacher evenement "click" sur l'econe ingredient
+
+   doAttachClickToFiltre(){
+
+      let btns = document.querySelectorAll('.title-icone');
+     
+      btns.forEach(btn =>{
+
+         btn.addEventListener('click', event =>{
+            //Fermer les listes ouvertes
+            let eltBlocs = document.querySelectorAll('.blocs-filtre');
+            eltBlocs.forEach(currentBloc =>{
+               if(currentBloc.classList.contains("filtre-open")){ 
+                  // ferme la liste              
+                  currentBloc.classList.remove("filtre-open");  
+                  // renverse l'icon
+                  let eleI = currentBloc.querySelector('i').classList;
+                  eleI.remove("fa-chevron-up");
+                  eleI.add("fa-chevron-down");         
+               }
    
+            })
+            
+            //Ouvrir la liste de l'elt cliqué
+             let parent = btn.getAttribute('data-parent');           
+             // parent = .blocs-filtre--ingredient,
+             document.querySelector(parent).classList.add("filtre-open");
+             let eleI = btn.querySelector('i').classList;
+             eleI.remove("fa-chevron-down");
+             eleI.add("fa-chevron-up");
+            
+            
+         });
+      })
+      
+
+          
+   }
 }
 
