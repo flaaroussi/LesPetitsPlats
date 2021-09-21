@@ -81,6 +81,7 @@ nav{
    }
    .title-icone{
       @include flex (row, space-between, center);
+      height: 100%;
       padding-left:1rem;
       padding-right:1rem;
    }
@@ -91,7 +92,6 @@ nav{
       visibility: hidden;
       border-bottom-right-radius: 4px;
       border-bottom-left-radius: 4px;
-      top: 60px;
       z-index: 10;  
       padding-top: 20px; 
       padding-bottom: 20px;
@@ -112,6 +112,7 @@ nav{
    
 }
 
+
 .filtre-open{
    >.bloc-search-resultat{
       visibility: visible !important;
@@ -124,13 +125,17 @@ nav{
 
 //style input
 .saisiTag{
+   display: none;
    visibility:hidden;
+   min-width: 80%;
    border:none;
    padding: 0;
-   padding-left:1rem;
+   background-color: transparent;
+   color: #FFFFFF;
+   font-weight: bold;
 }
 .bloc-search{
-   height: 60px;
+   height: 100%;
 }
 
 //Ranger les lignes depassant le conteneur de la description d'une recette.

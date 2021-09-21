@@ -1,3 +1,7 @@
+function log(text){
+    console.log(text);
+ }
+
 const recipesData   =  [
     {
         "identifiant" : 1 ,

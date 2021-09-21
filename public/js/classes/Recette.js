@@ -16,13 +16,81 @@ export default class Recipe {
       //creer un array à partir de la liste des appareils des recettes filtrées
       this.appareils = [];
       //creer un array à partir de la liste des ustensiles des recettes filtrées
-      this.ustensilesTries =[];
+      this.ustensilesTries = [];
+      //creer un array des tags selectionnés.
+      this.tagsListe= [];
       this.displayRecipes(recipes);
-      this.enterMot();
+      this.doAttachEventBarreRecherche();
+      //272
       this.doAttachClickToFiltre();
-
+      this.doAttachSaisiInput(); 
    }
 
+
+   //////////////en cours
+   //Filtrer la liste des elts d'un bloc selon mot clé saisi.
+   /**
+    * 
+    */
+   doAttachSaisiInput(){
+      let inputs = document.querySelectorAll(".saisiTag");      
+      inputs.forEach(currentInput =>{
+         currentInput.value ="";  
+         currentInput.addEventListener("input", event =>{
+            let inputSource = currentInput.getAttribute("data-filtre");
+
+            switch(inputSource) {
+               case 'ingredient' :
+                     this.filterIngredients(currentInput.value);
+               break;
+
+               case 'appareil' :
+                  this.filterAppareils(currentInput.value);
+
+               break;
+
+               case 'ustentiles' :
+                  this.filterUstentiles(currentInput.value);
+               break;
+
+            }
+          
+         })
+
+     
+      })
+
+   }
+   /**
+    * Filtrer et afficher la liste des ingredients qui contient le mot saisi
+    * @param {*} motSaisi 
+    */
+
+   filterIngredients(motSaisi){
+      let result = [];
+      motSaisi = Utils.toLawer(motSaisi);
+      //garder les ingredients qui ont le mot saisi
+      result = this.ingredients.filter(currentIngredient => {
+         //convertir l'ingredient en minuscules. 
+         currentIngredient = Utils.toLawer(currentIngredient);
+         return currentIngredient.includes(motSaisi);
+      });         
+      // vider la liste des ingrédients
+      document.querySelector(".bloc-search-resultat--ingredient").innerHTML = "";
+      //afficher les ingredient qui contiennent le mot saisi.
+      result.forEach(currentIngredient => {
+         this.doAddIngredient(currentIngredient)
+      })    
+   }
+
+   filterAppareils(motSaisi){
+      
+   }
+
+   filterUstentiles(motSaisi){
+      
+   }
+   
    //afficher les 50 recettes.
    displayRecipes(recipes) {
       let elt = document.getElementById("recipes_container");
@@ -35,6 +103,7 @@ export default class Recipe {
       this.ingredients = [];
       this.appareils = [];
       this.ustensilesTries =[];
+      this.tagsListe= [];
 
       recipes.forEach(currentRecipe => {
          let article = document.createElement("article");
@@ -42,7 +111,6 @@ export default class Recipe {
          article.innerHTML = this.getTemplateRecipe(currentRecipe);
          elt.appendChild(article);
       })
-
    }
 
    /**
@@ -101,22 +169,22 @@ export default class Recipe {
    }
 
    /**
-    * Récupérer le mot saisi
+    * Attacher la saisie à la barre principale.
     */
-   enterMot() {
+   doAttachEventBarreRecherche() {
       let elt = document.getElementById("barreRecherche");
-
       elt.value = "";
       elt.addEventListener('input', e => {
-         //Controler le mot saisi
+         //filtrer les recettes qui contient le mot saisi.
          this.filterRecipes(elt.value);
       })
    }
+
    /**
-    * 
+    * Rechercher le tag dans la liste des ingredients.
     * @param {*} ingredients 
     * @param {*} tag 
-    * @returns ?????????????????????????
+    * @returns {boolean} 
     */
    isIngredientsHaveTag(ingredients, tag) {
       let resultat = ingredients.some(currentIngredient => Utils.toLawer(currentIngredient.ingredient).includes(tag));
@@ -164,7 +232,15 @@ export default class Recipe {
          return true
       } else {
          //si l'ingredient ne se trouve pas dans l'array des ingredient=>ajout de l'ingrédient.
-         this.ingredients.push(ingredient);
+         this.ingredients.push(ingredient); 
+         this.doAddIngredient(ingredient);        
+      }      
+   }
+   /**
+    * ajouter un ingredient dans la liste 
+    * @param {string} ingredient 
+    */
+   doAddIngredient(ingredient){
          let elt = document.querySelector(".bloc-search-resultat--ingredient");
          let li = Utils.creatEltHtml("li", "search-ingredient");
          li.innerHTML = ingredient;
@@ -172,9 +248,8 @@ export default class Recipe {
          //Attacher "click" à l'ingrédient.
          li.addEventListener("click", event => {
             //Affiche l' ingrédient cliqué sous forme de tag. 
-            this.doAddFiltreTags(li, 'ingredient');
+            this.doAddFiltreTags(li, 'ingredient');  
          });
-      }
    }
 
    /**
@@ -195,7 +270,7 @@ export default class Recipe {
          elt.appendChild(li);
          li.addEventListener("click", event => {
             this.doAddFiltreTags(li, 'appareil');
-            console.log(li)
+           
          })
       }
    }
@@ -245,9 +320,17 @@ export default class Recipe {
                   let eleI = currentBloc.querySelector('i').classList;
                   eleI.remove("fa-chevron-up");
                   eleI.add("fa-chevron-down");
+                  //
+                  currentBloc.querySelector("p").style= "display:block;visibility:visible";
+                  currentBloc.querySelector("input").style= "display:hidden;visibility:hidden";
                }
             })
-            //Ouvrir la liste de l'elt cliqué
+         
+         //si la listes des elemts est ouverte alor afficher l'input et cacher le titre de l'element.
+         btn.querySelector("p").style = "display:none;visibility:hidden"
+         btn.querySelector("input").style = "display:block;visibility:visible";
+         
+           //Ouvrir la liste de l'elt cliqué
             let parent = btn.getAttribute('data-parent');
             // parent = .blocs-filtre--ingredient,
             document.querySelector(parent).classList.add("filtre-open");
@@ -265,12 +348,21 @@ export default class Recipe {
     */
    doAddFiltreTags(li, filtre) {
       let sectionTag = document.querySelector(".filtre-tags");
-
-     
+      //condition pour ne pas afficher les tags dupliqués.
+      //si le tag existe dans l'array des tag
+      if(this.tagsListe.includes(li)){
+         //rien à faire
+        return true
+        //si non ajout du tag dans la liste des tags
+      }else{
+        this.tagsListe.push(li);
+        //et crée la structure HTML de la liste des tags
+         
       let tag = Utils.creatEltHtml("div", "tag " + filtre);
       tag.innerHTML = `<span>${li.textContent}</span><i class="far fa-times-circle"></i>`;
       sectionTag.appendChild(tag);
       this.doCloseTag(tag);
+      }
    }
    /**
     * 
