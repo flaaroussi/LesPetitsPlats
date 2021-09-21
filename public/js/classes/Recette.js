@@ -11,6 +11,12 @@ export default class Recipe {
     */
    constructor(recipes) {
       this.recipes = recipes;
+      //creer un array à partir de la liste des ingrédients des recettes filtrées
+      this.ingredients = [];
+      //creer un array à partir de la liste des appareils des recettes filtrées
+      this.appareils = [];
+      //creer un array à partir de la liste des ustensiles des recettes filtrées
+      this.ustensilesTries =[];
       this.displayRecipes(recipes);
       this.enterMot();
       this.doAttachClickToFiltre();
@@ -25,6 +31,10 @@ export default class Recipe {
       document.querySelector(".bloc-search-resultat--ingredient").innerHTML = "";
       document.querySelector(".bloc-search-resultat--appareil").innerHTML = "";
       document.querySelector(".bloc-search-resultat--ustensiles").innerHTML = "";
+      //vider array crée à partir de la liste des ingrédients des recettes filtrées
+      this.ingredients = [];
+      this.appareils = [];
+      this.ustensilesTries =[];
 
       recipes.forEach(currentRecipe => {
          let article = document.createElement("article");
@@ -36,7 +46,7 @@ export default class Recipe {
    }
 
    /**
-    * Structure HTML du bloc recette
+    * Créer la structure HTML du bloc recette
     * 
     * @param {array} recipes :data des 50 recettes
     * @returns {HTMLElement} :structure bloc recette
@@ -76,23 +86,17 @@ export default class Recipe {
                ${uniteValue}
             </div>
             `
+         //Afficher les ingredients dans le bloc de recherche "Ingredients".
          this.doDisplayIngredient(currentIngredient.ingredient);
-
-
       })
-
-      //Afficher les appareils dans le btn appareil
+      //Afficher les appareils dans le le bloc de recherche "appareil".
       this.doDisplayAppareil(recipes.appareil);
-      //
+      //Afficher les appareils dans le le bloc de recherche "ustensiles".
       this.doDisplayUstensiles(recipes.ustensiles);
-      
-
       //Element ou sera affichée la description de la recette.
       template += `</div>
             <p class="description textEllipsis">${recipes.description}</p></div>`;
       return template;
-
-
 
    }
 
@@ -116,13 +120,11 @@ export default class Recipe {
     */
    isIngredientsHaveTag(ingredients, tag) {
       let resultat = ingredients.some(currentIngredient => Utils.toLawer(currentIngredient.ingredient).includes(tag));
-
       return resultat;
-
    }
 
    /**
-    * 
+    * Afficher les recettes filtrées selon tag saisi dans la barre de recherche principale
     * @param {*} tag 
     */
    filterRecipes(tag) {
@@ -139,7 +141,6 @@ export default class Recipe {
             } else {
                return false;
             }
-            // >> return nom.includes(tag) || description.includes(tag);
          })
       } else {
          //Afficher toutes les recettes.
@@ -147,78 +148,142 @@ export default class Recipe {
       }
       //Afficher les recettes triées par tag.
       this.displayRecipes(recipesTag);
-
-      
-
-
    }
 
-   //Afficher ingredient de la recherche 1 dans les btn du recheche2
+
+   /**
+    * Afficher les ingrédients dans les blocs de la recherche avancée.
+    * @param {*} ingredient liste des ingredients resultat de la recherche barre principale.
+    */
    doDisplayIngredient(ingredient) {
-      let elt = document.querySelector(".bloc-search-resultat--ingredient");
-      let li = Utils.creatEltHtml("li", "search-ingredient");
-      li.innerHTML = ingredient;
-      elt.appendChild(li);
-
+      //condition pour supprimer les dupliqués.
+      //Capitaliser la premiere lettre des ingrédients
+      ingredient = Utils.capitalizeFirstLetter(ingredient);
+      //si l'ingredient se trouve dans l'array des ingredient =>rien à faire
+      if (this.ingredients.includes(ingredient)) {
+         return true
+      } else {
+         //si l'ingredient ne se trouve pas dans l'array des ingredient=>ajout de l'ingrédient.
+         this.ingredients.push(ingredient);
+         let elt = document.querySelector(".bloc-search-resultat--ingredient");
+         let li = Utils.creatEltHtml("li", "search-ingredient");
+         li.innerHTML = ingredient;
+         elt.appendChild(li);
+         //Attacher "click" à l'ingrédient.
+         li.addEventListener("click", event => {
+            //Affiche l' ingrédient cliqué sous forme de tag. 
+            this.doAddFiltreTags(li, 'ingredient');
+         });
+      }
    }
 
-   doDisplayAppareil(appareils) {
-      let elt = document.querySelector(".bloc-search-resultat--appareil");
-      let li = Utils.creatEltHtml("li", "search-appareil");
-      li.innerHTML = appareils;
-      elt.appendChild(li);
-   }
+   /**
+    * Afficher les appareils(resultat recherche barre principale) dans les blocs de recherche avancée.
+    * @param {*} appareil 
+    * @returns 
+    */
+   doDisplayAppareil(appareil) {
+      
+      if (this.appareils.includes(appareil)) {
+         return true
+      } else {
+         this.appareils.push(appareil);
 
-   doDisplayUstensiles(ustensiles) {
-      let elt = document.querySelector(".bloc-search-resultat--ustensiles");
-      if(ustensiles){
-         ustensiles.forEach(currentUstensiles =>{
-            let li = Utils.creatEltHtml("li", "search-appareil");
-            li.innerHTML = currentUstensiles;
-           elt.appendChild(li);
+         let elt = document.querySelector(".bloc-search-resultat--appareil");
+         let li = Utils.creatEltHtml("li", "search-appareil");
+         li.innerHTML = appareil;
+         elt.appendChild(li);
+         li.addEventListener("click", event => {
+            this.doAddFiltreTags(li, 'appareil');
+            console.log(li)
          })
       }
+   }
+   //Afficher les ustensiles(resultat recherche barre principale) dans les blocs de recherche avancée.
+   doDisplayUstensiles(ustensiles) {
       
+      let elt = document.querySelector(".bloc-search-resultat--ustensiles");
+      if (ustensiles) {
+         ustensiles.forEach(currentUstensile => {
+            currentUstensile = Utils.capitalizeFirstLetter(currentUstensile);
+            //
+            if(this.ustensilesTries.includes(currentUstensile)){
+               return true
+            }else{  
+               //alors ajout le nouveau ustensiles dans le nouveau array des utensiles non dupliqués
+               this.ustensilesTries.push(currentUstensile)
+               //
+               let li = Utils.creatEltHtml("li", "search-ustensile");
+               li.innerHTML = currentUstensile;
+               elt.appendChild(li);
+               li.addEventListener("click", event => {
+                  this.doAddFiltreTags(li, 'ustensile');
+                  console.log(li)
+               })
+            //
+            }    
+            //
+         })
+      }
    }
 
-
-   //attacher evenement "click" sur l'econe ingredient
-
-   doAttachClickToFiltre(){
-
+   /**
+    * Attacher evenement "click" sur la fleche des 3 blocs de recherche
+    */
+   doAttachClickToFiltre() {
       let btns = document.querySelectorAll('.title-icone');
-     
-      btns.forEach(btn =>{
-
-         btn.addEventListener('click', event =>{
+      btns.forEach(btn => {
+         btn.addEventListener('click', event => {
             //Fermer les listes ouvertes
             let eltBlocs = document.querySelectorAll('.blocs-filtre');
-            eltBlocs.forEach(currentBloc =>{
-               if(currentBloc.classList.contains("filtre-open")){ 
-                  // ferme la liste              
-                  currentBloc.classList.remove("filtre-open");  
-                  // renverse l'icon
+            eltBlocs.forEach(currentBloc => {
+               //si le bloc contient "filtre-open"
+               if (currentBloc.classList.contains("filtre-open")) {
+                  // supprimer "filtre-open" pour fermer la liste              
+                  currentBloc.classList.remove("filtre-open");
+                  // et Changer la direction de la flèche.
                   let eleI = currentBloc.querySelector('i').classList;
                   eleI.remove("fa-chevron-up");
-                  eleI.add("fa-chevron-down");         
+                  eleI.add("fa-chevron-down");
                }
-   
             })
-            
             //Ouvrir la liste de l'elt cliqué
-             let parent = btn.getAttribute('data-parent');           
-             // parent = .blocs-filtre--ingredient,
-             document.querySelector(parent).classList.add("filtre-open");
-             let eleI = btn.querySelector('i').classList;
-             eleI.remove("fa-chevron-down");
-             eleI.add("fa-chevron-up");
-            
-            
+            let parent = btn.getAttribute('data-parent');
+            // parent = .blocs-filtre--ingredient,
+            document.querySelector(parent).classList.add("filtre-open");
+            let eleI = btn.querySelector('i').classList;
+            eleI.remove("fa-chevron-down");
+            eleI.add("fa-chevron-up");
          });
       })
-      
-
-          
    }
+
+   /**
+    * Ajout d'un tag dans la section filtre/tag.
+    * @param {*} li 
+    * @param {*} filtre =ingrédient,appareil ou ustentile c'est pour appliquer un style au tag 
+    */
+   doAddFiltreTags(li, filtre) {
+      let sectionTag = document.querySelector(".filtre-tags");
+
+     
+      let tag = Utils.creatEltHtml("div", "tag " + filtre);
+      tag.innerHTML = `<span>${li.textContent}</span><i class="far fa-times-circle"></i>`;
+      sectionTag.appendChild(tag);
+      this.doCloseTag(tag);
+   }
+   /**
+    * 
+    * @param {*} tag 
+    */
+   doCloseTag(tag) {
+      let icone = tag.querySelector('.far');
+      icone.addEventListener("click", event => {
+         //supprimer l'element Tag.
+         tag.remove();
+      })
+
+   }
+
 }
 

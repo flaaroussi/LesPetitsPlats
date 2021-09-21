@@ -14,7 +14,10 @@ export default class Utils {
       let tag = document.createElement(tagName);
       tag.className = classTag;
       
-
       return tag;
    }
+
+   static capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 }
