@@ -112,7 +112,6 @@ nav{
    
 }
 
-
 .filtre-open{
    >.bloc-search-resultat{
       visibility: visible !important;
@@ -177,6 +176,19 @@ max-height: 120px;
          margin-left: 0.3rem;
       }
    }
+}
+
+//Style message affiché dans le cas nbre recette =0
+
+.msg-no-recipe{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding-left: 0.4rem;
+   border-radius: 4rem;
+   background-color:$color-tag3;
+   color :$color-white;
+   box-shadow: 1 1 1 1;
 }
 
 
