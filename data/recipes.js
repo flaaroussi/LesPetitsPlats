@@ -894,7 +894,7 @@ const recipesData   =  [
         "temps" : 30 ,
         "description" : "Faire fondre le beurre et le mélange avec le sucre. Finalement ajouter l'oeuf. Ajouter la farine tout en mélangeant peu pa peu pour avoir une masse sans grumaux. Ajouter les pépites de chocolat. Faire, une plaque de cuisson de petites boules pour les cookies. Mettre au four à 180° pour 10 minutes." ,
         "appareil" : "Quatre" ,
-        "ustensils" : [ "fouet" ,  "saladier" ,  "plaque de cuisson" ]
+        "ustensiles" : [ "fouet" ,  "saladier" ,  "plaque de cuisson" ]
     } ,
     {
         "identifiant" : 26 ,

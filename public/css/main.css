@@ -138,6 +138,7 @@ nav .menu {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 0.6rem;
+  margin-bottom: 1.5rem;
 }
 nav li {
   height: 100%;
@@ -259,6 +260,16 @@ nav li {
 }
 .filtre-tags .tag i {
   margin-left: 0.3rem;
+}
+
+.msg-no-recipe {
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 0.4rem;
+  background-color: #ff6347;
+  color: #FFFFFF;
+  text-align: left;
+  box-shadow: 1 1 1 1;
 }
 
 .access-main {

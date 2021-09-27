@@ -59,6 +59,7 @@ nav{
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       grid-gap: 0.6rem;
+      margin-bottom: 1.5rem;
    }
    li{
       height: 100%;
@@ -181,13 +182,14 @@ max-height: 120px;
 //Style message affiché dans le cas nbre recette =0
 
 .msg-no-recipe{
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   padding-left: 0.4rem;
-   border-radius: 4rem;
+   width: 100%;
+   
+   padding: 1.5rem;
+   border-radius: 0.4rem;
    background-color:$color-tag3;
    color :$color-white;
+   text-align: left;
+
    box-shadow: 1 1 1 1;
 }
 
