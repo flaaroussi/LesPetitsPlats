@@ -12,6 +12,11 @@ body {
   margin: auto;
   font-family: Arial, DMSans, sans-serif;
 }
+@media screen and (max-width: 650px) {
+  body body {
+    width: 94%;
+  }
+}
 
 * {
   box-sizing: border-box;
@@ -82,6 +87,12 @@ a {
   grid-gap: 3rem;
 }
 
+@media screen and (max-width: 650px) {
+  #recipes_container {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
 .recipe-card_header {
   background-color: #d4d4d4;
   height: 15rem;
@@ -147,6 +158,14 @@ nav li {
   font-size: 0.8rem;
 }
 
+/*********************************/
+@media screen and (max-width: 650px) {
+  .menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+/**********************************/
 .blocs-filtre {
   border-radius: 0.2rem;
   position: relative;

@@ -6,7 +6,16 @@
    grid-template-columns: 1fr 1fr 1fr;
    //space between column gap and row gap.
    grid-gap: 3rem;
+   
 }
+
+@media screen and (max-width: 650px) {
+   #recipes_container{
+      display: grid;
+      grid-template-columns: 1fr;
+   }
+ }
+
 .recipe-card_header{
    background-color: $color1;
    height: 15rem;
@@ -68,6 +77,15 @@ nav{
       font-size: 0.8rem;
    }
 }
+/*********************************/
+@media screen and (max-width: 650px) {
+   .menu{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+   }
+ }
+ /**********************************/
+
 .blocs-filtre{
    border-radius: 0.2rem;
    position: relative; 

@@ -4,6 +4,7 @@
  */
 
 import Utils from "../utils/Utils.js";
+import Ingredient from "./Ingredient.js";
 
 export default class Recipe {
 
@@ -21,9 +22,7 @@ export default class Recipe {
       //creer un array des tags selectionnés.
       this.tagsListe = [];
 
-      this.ingredientTagsListe = [];
-      this.appareilTagsListe = [];
-      this.ustensileTagsListe = [];
+
 
       this.displayRecipes(recipes);
       this.doAttachEventBarreRecherche();
@@ -35,7 +34,7 @@ export default class Recipe {
    //Etape 1************
 
    /**
-    * Afficher les 50 recettes 
+    * Définir la fonction d'affichage des 50 recettes à partir de recipes.js et des recettes filtrées 
     * Afficher message si aucune recette ne contient le mot saisi.
     * @param {*} recipes :données des recettes affichées dans le fichier js.
     */
@@ -43,19 +42,21 @@ export default class Recipe {
       let elt = document.getElementById("recipes_container");
       elt.innerHTML = "";
 
-      //vider les elements ingredients+ustensiles+appareils.
+      //vider les listes: ingredients+ustensiles+appareils (sous listes des blocs des recherches avancées).
       document.querySelector(".bloc-search-resultat--ingredient").innerHTML = "";
       document.querySelector(".bloc-search-resultat--appareil").innerHTML = "";
       document.querySelector(".bloc-search-resultat--ustensiles").innerHTML = "";
-      //vider array crée à partir de la liste des elts des recettes filtrées
+
+      //vider les arrays des tags.
       this.ingredients = [];
       this.appareils = [];
       this.ustensilesTries = [];
+
       //Si le nbre des recettes filtrées est sup à 0
       if (recipes.length > 0) {
          //activer le style de l'elt "recipes_container" déje annuler dans la condition "else".
          elt.style.display = "grid";
-         //Activer affichage des blocs de recherche'désactive dans 'else'*
+         //Activer le style d'affichage des recetts désactivé dans la condition 'else' suivantes.
          document.querySelector('.menu').style.display = "grid";
          recipes.forEach(currentRecipe => {
             let article = document.createElement("article");
@@ -63,9 +64,10 @@ export default class Recipe {
             article.innerHTML = this.getTemplateRecipe(currentRecipe);
             elt.appendChild(article);
          })
-         //Si non afficher message
+
+         //Si aucune recette ne repond au condision on afficher le message.
       } else {
-         //annuler le style de l'elts parrent "recipes_container"
+         //annuler le style de l'elts parent "recipes_container" pour pouvoir afficher le mesage dans toute la page
          elt.style.display = "block";
          //* Ne pas afficher les blocs de recherches
          document.querySelector('.menu').style.display = "none";
@@ -81,9 +83,9 @@ export default class Recipe {
     * @returns {HTMLElement} :structure bloc recette
     */
    getTemplateRecipe(recipes) {
-      //Element vide en haut du bloc recette
+      //Element vide en haut du bloc recette.
       let template = `<div class="recipe-card_header"></div> `
-      //Element ou sera affiché: titre + timer+temps
+      //Element ou sera affiché : titre + timer + temps.
       template += `
             <div class="title-time-recipe">
                <p class="nom">${recipes.nom} </p>
@@ -91,12 +93,9 @@ export default class Recipe {
             </div>
             <div class="recipe-card_content">
             <div>`
-      //Element ou sera affiché les ingrédients
+      //Element ou sera affiché les ingrédients.
       recipes.ingredients.forEach(currentIngredient => {
-         //si l'"unité" n'existe pas dans le data ==rien à afficher
-         //let uniteValue = currentIngredient.unite ? currentIngredient.unite : "" ;
-         //cela veut dire condition ? val1 : val2 Si condition vaut true,
-         // l'opérateur vaudra val1. Sinon il vaudra val2
+         //si l'"unité" n'existe pas dans le data == rien à afficher (ne pas affiché undefined).
          let uniteValue = "";
          if (currentIngredient.unite) {
             uniteValue = currentIngredient.unite;
@@ -122,7 +121,7 @@ export default class Recipe {
       this.doDisplayAppareil(recipes.appareil);
       //Afficher les appareils dans le le bloc de recherche "ustensiles".
       this.doDisplayUstensiles(recipes.ustensiles);
-      //Element ou sera affichée la description de la recette.
+      //Element ou sera affiché la description de la recette.
       template += `</div>
             <p class="description textEllipsis">${recipes.description}</p>
             </div>`;
@@ -131,7 +130,7 @@ export default class Recipe {
    }
 
    /**
-    * Attacher la saisie à la barre principale.
+    * Attacher evenement 'saisi' à la barre principale.
     */
    doAttachEventBarreRecherche() {
       let elt = document.getElementById("barreRecherche");
@@ -182,21 +181,21 @@ export default class Recipe {
       //Appliquer 2 eme filtre: Filtrer les recettes  par tags des ingredients s'il y en a .
       /****************************************************************************** */
 
-      //si au moins un tag ingredient existe
-      if (this.ingredientTagsListe.length > 0) {
+      //si au moins un tag ingredient existe(this.getIngredientTags()=tags selectionnés-tags fermés)
+      if (this.getIngredientTags().length > 0) {
          recipesFiltree = recipesFiltree.filter(currentRecipe => {
             //on crée et on retourne une nouvelle array "recipesFiltree"  et on ajoute la recette qui contient le tag.
             return this.isRecipesHaseTagsIngredient(currentRecipe);
          })
       }
       // Si la liste des "tags app" est sup à 0 alors ;;;;;;;;;;;;;;;;;;
-      if (this.appareilTagsListe.length > 0) {
+      if (this.getAppareilTags().length > 0) {
          recipesFiltree = recipesFiltree.filter(currentRecipe => {
             //on crée et on retourne une nouvelle array "recipesFiltree"  et on ajoute la recette qui contient le tag.
             return this.isRecipesHaseTagsAppareil(currentRecipe);
          })
       }
-      if (this.ustensileTagsListe.length > 0) {
+      if (this.getUstensileTags().length > 0) {
          recipesFiltree = recipesFiltree.filter(currentRecipe => {
             //on crée et on retourne une nouvelle array "recipesFiltree"  et on ajoute la recette qui contient le tag.
             return this.isRecipesHaseTagsUstensile(currentRecipe);
@@ -216,7 +215,6 @@ export default class Recipe {
       inputs.forEach(currentInput => {
          currentInput.value = "";
          currentInput.addEventListener("input", event => {
-
             let inputSource = currentInput.getAttribute("data-filtre");
             switch (inputSource) {
                case 'ingredient':
@@ -238,14 +236,16 @@ export default class Recipe {
 
       })
    }
+
+
    /**
-    * Filtrer et afficher la liste des ingredients qui contiennent le mot saisi
-    * @param {string} motSaisi mot saisi dans l'input de la recherche avancée.
-    */
+      * Filtrer et afficher la liste des ingredients qui contiennent le mot saisi dans l'input .
+      * @param {string} motSaisi mot saisi dans l'input de la recherche avancée.
+      */
    filterIngredients(motSaisi) {
       let result = [];
       motSaisi = Utils.toLawer(motSaisi);
-      //garder les ingredients qui ont le mot saisi
+      //garder les ingredients(this.getIngredientTags()=array des ingredients) qui ont le mot saisi
       result = this.ingredients.filter(currentIngredient => {
          //convertir l'ingredient en minuscule. 
          currentIngredient = Utils.toLawer(currentIngredient);
@@ -253,16 +253,17 @@ export default class Recipe {
       });
       // vider la liste des ingrédients
       document.querySelector(".bloc-search-resultat--ingredient").innerHTML = "";
-      //afficher les ingredient qui contiennent le mot saisi.
+
       result.forEach(currentIngredient => {
          this.doAddIngredient(currentIngredient)
       })
    }
    /**
-    *Selectionner un ingredient et l'ajouter dans la liste des ingredients.
-    * @param {string} ingredient 
-    */
+   *Selectionner un ingredient et l'ajouter dans la liste des ingredients.
+   * @param {string} ingredient 
+   */
    doAddIngredient(ingredient) {
+      //creer structure HTML pour un ingredient
       let elt = document.querySelector(".bloc-search-resultat--ingredient");
       let li = Utils.creatEltHtml("li", "search-ingredient");
       li.innerHTML = ingredient;
@@ -273,6 +274,8 @@ export default class Recipe {
          this.doAddFiltreTags(li, 'ingredient');
       });
    }
+
+
    /**
     * Filtrer et afficher la liste des appareils qui contiennent le mot saisi
     * @param {*} motSaisi 
@@ -304,6 +307,8 @@ export default class Recipe {
          this.doAddFiltreTags(li, 'appareil');
       })
    }
+
+
    /**
     * Filtrer et afficher la liste des ustensiles qui contiennent le mot saisi
     * @param {*} motSaisi 
@@ -342,9 +347,9 @@ export default class Recipe {
     * @returns {boleen} true: si les recettes contiennent l'ensembles des tags ingredients electionnés.
     */
    isRecipesHaseTagsIngredient(recipe) {
-      //On crée une array à partir de l'elt HTML '.filtre-tags .ingredient span',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .ingredient span'));
-      //log(tagsListe)
+      //On crée une array à partir de la fonction getIngredientTags qui nous retourne tags=tagsselectionné-tags fermés
+      // au lieu l'elt HTML '.filtre-tags .ingredient span' qui va nous donner tags = tags selectionés et va garder les tags fermés.
+      let tagsListe = this.getIngredientTags();
       let resultat = [];
       resultat = recipe.ingredients.filter(currentIng => {
          //Variable qui permet juste de savoir est ce que le tag existe dans l'ingredient.
@@ -373,74 +378,42 @@ export default class Recipe {
     * @param {*} recipe La recette filtrée resultat de la recherche principale. 
     * @returns 
     */
-
    isRecipesHaseTagsAppareil(recipe) {
-      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .appareil span'))
-      let counter = [];
-      tagsListe.forEach(currentTag => {
-         console.log('ok')
-         if (Utils.toLawer(recipe.appareil).includes(Utils.toLawer(currentTag.textContent))) {
-            counter.push(recipe.appareil);
-         }
-      })
-      //recip.apparail contient juste un seul elt donc si au moins un seul tag existe dans l'appareil
-      //c-a-d le counter est supereur à 0
-      if (counter.length > 0) {
-         //donc return true
-         return true
-      } else {
-         return false;
-      }
-   }
-
-/**
-    * Est ce que la recette contient les tags ingredients : true ou false.
-    * @param {*} recipe :La recette filtrée resultat de la recherche principale. 
-    * @returns {boleen} true: si les recettes contiennent l'ensembles des tags ingredients selectionnés.
-    */
-   isRecipesHaseTagsIngredient(recipe) {
-      //On crée une array à partir de l'elt HTML '.filtre-tags .ingredient span',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .ingredient span'));
-      //log(tagsListe)
-      let resultat = [];
-      resultat = recipe.ingredients.filter(currentIng => {
-         //Variable qui permet juste de savoir est ce que le tag existe dans l'ingredient.
-         let stat = [];
+      let tagsListe = this.getAppareilTags();
+      log(tagsListe);
+      if (tagsListe.length > 0) {
+         let counter = [];
          tagsListe.forEach(currentTag => {
-            //si currentTag existe dans l'ingredient        
-            if (Utils.toLawer(currentIng.ingredient).includes(Utils.toLawer(currentTag.textContent))) {
-               //alors ajouté currentIng.ingredient dans stat
-               stat.push(currentIng.ingredient);
+            console.log('ok')
+            if (Utils.toLawer(recipe.appareil).includes(Utils.toLawer(currentTag.textContent))) {
+               counter.push(recipe.appareil);
             }
-         });
-         //si "stat" est non vide alors return true
-         return (stat.length);
-      })
-      //si le nbre de tags selectionnés est égal au nbre d'ingredients alors la recette doit etre affichée.
-      // return (resultat.length == tagsListe.length) ? true : false;
-      if (resultat.length == tagsListe.length) {
-         return true
+         })
+         //recip.appareil contient juste un seul elt donc si au moins un seul tag existe dans l'appareil
+         //c-a-d le counter est supereur à 0
+         if (counter.length > 0) {
+            //donc return true
+            return true
+         } else {
+            return false;
+         }
       } else {
-         return false;
+         return true
       }
    }
-
    /**
     * Est ce que la recette contient les tags ustentiles : true ou false.
     * @param {*} recipe :La recette filtrée resultat de la recherche principale. 
     * @returns {boleen} true: si les recettes contiennent l'ensembles des tags ustensiles selectionnés.
     */
-    isRecipesHaseTagsUstensile(recipe) {
-       console.log(recipe.ustensiles)
-      //On crée une array à partir de l'elt HTML '.filtre-tags .ingredient span',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .ustensile span'));
-      //log(tagsListe)
+   isRecipesHaseTagsUstensile(recipe) {
+      console.log(recipe.ustensiles)
+      let tagsListe = this.getUstensileTags();
       let resultat = [];
       //si ustensile existe dans le fichier parent js (recipes.js)
-      if(recipe.ustensiles){
+      if (recipe.ustensiles) {
          //on applique le filtre::::::::::::::::::::::::::
          resultat = recipe.ustensiles.filter(currentUstensile => {
-
             //Variable qui permet juste de savoir est ce que le tag existe dans l'ustensile.
             let stat = [];
             tagsListe.forEach(currentTag => {
@@ -454,7 +427,7 @@ export default class Recipe {
             return (stat.length);
          })
       }
-      
+
       //si le nbre de tags selectionnés est égal au nbre dustensiles alors la recette doit etre affichée.
       // return (resultat.length == tagsListe.length) ? true : false;
       if (resultat.length == tagsListe.length) {
@@ -463,30 +436,6 @@ export default class Recipe {
          return false;
       }
    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
    /**
        * Afficher les ingrédients dans les blocs de la recherche avancée.
@@ -512,7 +461,7 @@ export default class Recipe {
     */
    doDisplayAppareil(appareil) {
       //si l'appareil existe dans le js 
-      if(appareil){
+      if (appareil) {
          //donc if ::::::::::::::::::::
          if (this.appareils.includes(appareil)) {
             return true
@@ -524,7 +473,6 @@ export default class Recipe {
             this.doAddAppareil(appareil);
          }
       }
-     
    }
    /**
     * Afficher les ustensiles(resultat recherche barre principale) dans les blocs de recherche avancée.
@@ -547,7 +495,7 @@ export default class Recipe {
    }
 
    /**
-    * Attacher evenement "click" sur la fleche des 3 blocs de recherche.
+    * Attacher evenement "click" sur la flèche des 3 blocs de recherche.
     * Fermer les filtres deja ouvertes.
     * Changer la flèche de up to down on cas de 2eme click.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
     */
@@ -557,7 +505,6 @@ export default class Recipe {
          btn.addEventListener('click', event => {
             //je dois garder stocker la classe de l'icone avant ouverture ou fermeture de filtre
             let iconeClassList = btn.querySelector("i").classList.value;
-
             // Fermer les filtres
             this.doCloseFiltresListes();
             //Ouvrir le filtre si l'icone contient la classe 'down'
@@ -586,28 +533,63 @@ export default class Recipe {
    doAddFiltreTags(li, filtre) {
       let sectionTag = document.querySelector(".filtre-tags");
       //condition pour ne pas afficher les tags dupliqués.
-      //si le tag existe dans l'array des tag
-      if (this.ingredientTagsListe.includes(li.textContent) || this.appareilTagsListe.includes(li.textContent) || this.ustensileTagsListe.includes(li.textContent)) {
+      //si le tag existe dans l'array des tags(array retourné par la fonction )
+      if (this.getIngredientTags().includes(li.textContent) || this.getAppareilTags().includes(li.textContent) || this.getUstensileTags().includes(li.textContent)) {
          //rien à faire
          return true
          //si non ajout du tag dans la liste des tags
       } else {
+         //;;;;;;;;;;;;;;;;;;;;;;;;;
          if (filtre == 'ingredient') {
-            this.ingredientTagsListe.push(li.textContent);
+            this.getIngredientTags().push(li.textContent);
          } else if (filtre == 'appareil') {
-            this.appareilTagsListe.push(li.textContent);
+            this.getAppareilTags().push(li.textContent);
          } else {
-            this.ustensileTagsListe.push(li.textContent);
+            this.getUstensileTags().push(li.textContent);
          }
 
-         //et crée la structure HTML de la liste des tags
+         //on crée la structure HTML de la liste des tags
          let tag = Utils.creatEltHtml("div", "tag " + filtre);
          tag.innerHTML = `<span>${li.textContent}</span><i class="far fa-times-circle"></i>`;
          sectionTag.appendChild(tag);
+         //......................
          this.doCloseTag(tag);
+         //..........................
          this.doFilreRecipesByTag();
       }
    }
+   /***Fontcion pour créer array des tags selectionnés =tags selectionnées-tags fermés*************** */
+   /**
+    * Retourne la liste des tags ingrédients selectionnés
+    * cette fonction nous donne tags =tags selectionés - tags fermés 
+    * @returns 
+    */
+   getIngredientTags() {
+      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .ingredient span'));
+      log(tagsListe)
+      return tagsListe;
+   }
+   /**
+    * Retourne la liste des tags appareils selectionnés
+    * cette fonction nous donne tags =tags selectionés - tags fermés 
+    * @returns 
+    */
+   getAppareilTags() {
+      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .appareil span'));
+      log(tagsListe)
+      return tagsListe;
+   }
+   /**
+    * Retourne la liste des tag usetensiles selectionnés
+    * cette fonction nous donne tags =tags selectionés - tags fermés 
+    * @returns 
+    */
+   getUstensileTags() {
+      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .ustensile span'));
+      return tagsListe;
+   }
+   /*********************************************************************************************** */
+
 
    /**
     * 
@@ -625,12 +607,10 @@ export default class Recipe {
       icone.addEventListener("click", event => {
          //supprimer l'element Tag.
          tag.remove();
+         //Réafficher les recette filtré par ;;;;;;;;;;;;;;;;;;;mot clé ;;;;;;;;;;;;;;;;;;;;
          this.doFilreRecipesByTag();
       })
    }
-
-
-
 
    /**
     * Fermer les filtres

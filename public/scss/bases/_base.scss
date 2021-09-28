@@ -8,6 +8,11 @@ body {
    width: 90%;
    margin: auto;
    font-family: Arial, DM+Sans, sans-serif;
+   @media screen and (max-width: 650px) {
+      body {
+        width: 94%;
+      }
+   }   
 }
 
 * {
