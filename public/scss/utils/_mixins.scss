@@ -1,0 +1,15 @@
+@mixin flex ($direction, $justify-content,$align-items){
+   display: flex;
+   
+   /** Si on a n'a pas besoin de flex direction cet attribut ne dois pas etre affiché*/
+   @if($direction != 0){
+      flex-direction:$direction;
+   }
+   /** si le pramettre  $justify-content égale à 0 >> on utilise pas l'attribut justify-content */
+   @if($justify-content != 0){
+      justify-content:$justify-content;
+   }
+   @if($align-items != 0){
+      align-items: $align-items;
+   }
+}

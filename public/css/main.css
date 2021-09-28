@@ -1,0 +1,307 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap);
+html {
+  font-size: 100%;
+  /* 16px par défaut */
+}
+
+body {
+  font-size: 0.75rem;
+  /* 12px */
+  width: 90%;
+  margin: auto;
+  font-family: Arial, DMSans, sans-serif;
+}
+@media screen and (max-width: 650px) {
+  body body {
+    width: 94%;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  list-style-type: none;
+  line-height: 1.2rem;
+}
+
+img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.logo-container {
+  margin-top: 4rem;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo-container img {
+  width: 350px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.barreRecherche-container {
+  width: 100%;
+  background-color: #ededed;
+  border-radius: 0.5rem;
+  padding-right: 1rem;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  display: flex;
+  /** Si on a n'a pas besoin de flex direction cet attribut ne dois pas etre affiché*/
+  flex-direction: row;
+  /** si le pramettre  $justify-content égale à 0 >> on utilise pas l'attribut justify-content */
+  justify-content: space-between;
+  align-items: center;
+}
+.barreRecherche-container input {
+  width: 100%;
+  height: 2.5rem;
+  background-color: #ededed;
+  border-radius: 0.5rem;
+  border: none;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.barreRecherche-container .fas {
+  font-size: 1.6rem;
+  position: relative;
+}
+
+#recipes_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 3rem;
+}
+
+@media screen and (max-width: 650px) {
+  #recipes_container {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+.recipe-card_header {
+  background-color: #d4d4d4;
+  height: 15rem;
+  width: 100%;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
+}
+
+.recipe-card {
+  border-bottom-left-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
+  background-color: #ededed;
+  min-height: 400px;
+}
+
+.title-time-recipe {
+  display: flex;
+  /** Si on a n'a pas besoin de flex direction cet attribut ne dois pas etre affiché*/
+  flex-direction: row;
+  /** si le pramettre  $justify-content égale à 0 >> on utilise pas l'attribut justify-content */
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.title-time-recipe .nom {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.title-time-recipe .temps {
+  font-weight: bold;
+  font-size: 18px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.recipe-card_content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.6rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+nav {
+  width: 100%;
+  margin: 0;
+}
+nav .menu {
+  list-style-type: none;
+  width: 60%;
+  height: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+@media screen and (max-width: 650px) {
+  nav .menu {
+    grid-template-columns: 1fr;
+  }
+}
+nav li {
+  height: 100%;
+  text-decoration: none;
+  color: #FFFFFF;
+  font-size: 0.8rem;
+}
+
+/**********************************/
+.blocs-filtre {
+  border-radius: 0.2rem;
+  position: relative;
+}
+.blocs-filtre--ingredient {
+  background-color: #118df4;
+}
+.blocs-filtre--appareil {
+  background-color: #2af1a2;
+}
+.blocs-filtre--ustensiles {
+  background-color: #ff6347;
+}
+.blocs-filtre .title-icone {
+  display: flex;
+  /** Si on a n'a pas besoin de flex direction cet attribut ne dois pas etre affiché*/
+  flex-direction: row;
+  /** si le pramettre  $justify-content égale à 0 >> on utilise pas l'attribut justify-content */
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.blocs-filtre .bloc-search-resultat {
+  padding-left: 1rem;
+  position: absolute;
+  visibility: hidden;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  z-index: 10;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 200%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.6rem;
+}
+.blocs-filtre .bloc-search-resultat--ingredient {
+  background-color: #118df4;
+}
+.blocs-filtre .bloc-search-resultat--appareil {
+  background-color: #2af1a2;
+}
+.blocs-filtre .bloc-search-resultat--ustensiles {
+  background-color: #ff6347;
+}
+
+.filtre-open > .bloc-search-resultat {
+  visibility: visible !important;
+}
+.filtre-open.blocs-filtre {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.saisiTag {
+  display: none;
+  visibility: hidden;
+  min-width: 80%;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.bloc-search {
+  height: 100%;
+}
+
+.textEllipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 120px;
+}
+
+.filtre-tags {
+  display: flex;
+  /** Si on a n'a pas besoin de flex direction cet attribut ne dois pas etre affiché*/
+  flex-direction: row;
+  /** si le pramettre  $justify-content égale à 0 >> on utilise pas l'attribut justify-content */
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 0.6rem;
+}
+.filtre-tags .tag {
+  display: flex;
+  /** Si on a n'a pas besoin de flex direction cet attribut ne dois pas etre affiché*/
+  flex-direction: row;
+  /** si le pramettre  $justify-content égale à 0 >> on utilise pas l'attribut justify-content */
+  align-items: center;
+  margin-right: 0.5rem;
+  padding: 0.3rem;
+  border-radius: 4px;
+}
+.filtre-tags .tag.ingredient {
+  background-color: #118df4;
+  color: #FFFFFF;
+}
+.filtre-tags .tag.appareil {
+  background-color: #2af1a2;
+  color: #FFFFFF;
+}
+.filtre-tags .tag.ustensile {
+  background-color: #ff6347;
+  color: #FFFFFF;
+}
+.filtre-tags .tag i {
+  margin-left: 0.3rem;
+}
+
+.msg-no-recipe {
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 0.4rem;
+  background-color: #ff6347;
+  color: #FFFFFF;
+  text-align: left;
+  box-shadow: 1 1 1 1;
+}
+
+.access-main {
+  background-color: #ededed;
+  width: 8rem;
+  position: fixed;
+  top: 4px;
+  left: calc(50% - 4rem);
+  display: none;
+  color: black;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 0.2rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/*# sourceMappingURL=main.css.map */

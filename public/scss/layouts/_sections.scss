@@ -1,0 +1,211 @@
+
+//Style section
+
+#recipes_container{
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   //space between column gap and row gap.
+   grid-gap: 3rem;
+   
+}
+
+@media screen and (max-width: 650px) {
+   #recipes_container{
+      display: grid;
+      grid-template-columns: 1fr;
+   }
+ }
+
+.recipe-card_header{
+   background-color: $color1;
+   height: 15rem;
+   width: 100%;
+   border-top-left-radius: 0.4rem;
+   border-top-right-radius: 0.4rem;
+}
+.recipe-card{
+   border-bottom-left-radius: 0.4rem;
+   border-bottom-right-radius: 0.4rem;
+   background-color: $color2;
+   min-height: 400px;
+}
+//titre et temps de la recette
+.title-time-recipe{
+   @include flex (row, space-between, center);
+   padding-left: 1rem;
+   padding-right: 1rem;  
+   .nom{
+      font-size: 0.9rem;
+      font-weight: bold;
+   }
+   .temps{
+      font-weight: bold;
+      font-size: 18px;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+   }
+}
+.recipe-card_content{
+   display: grid;
+   grid-template-columns: 1fr 1fr ;
+   //space between column gap and row gap.
+   grid-gap: 0.6rem;
+   padding-left: 1rem;
+   padding-right: 1rem;
+   padding-bottom: 1rem;
+}
+
+
+//recherche avancée
+
+nav{
+   width: 100%;
+   margin: 0;
+   .menu{
+      list-style-type: none;
+      width: 60%;
+      height: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      @media screen and (max-width: 650px) {
+         grid-template-columns: 1fr;
+      }
+      grid-gap: 0.6rem;
+      margin-bottom: 1.5rem;
+   }
+   li{
+      height: 100%;
+      text-decoration: none;
+      color :#FFFFFF;
+      font-size: 0.8rem;
+   }
+}
+
+ /**********************************/
+
+.blocs-filtre{
+   border-radius: 0.2rem;
+   position: relative; 
+   &--ingredient{
+      background-color:$color-tag1;
+   }
+   &--appareil{
+      background-color:$color-tag2;
+   }
+   &--ustensiles{
+      background-color:$color-tag3;
+   }
+   .title-icone{
+      @include flex (row, space-between, center);
+      height: 100%;
+      padding-left:1rem;
+      padding-right:1rem;
+   }
+
+   .bloc-search-resultat{
+      padding-left:1rem;
+      position: absolute;
+      visibility: hidden;
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+      z-index: 10;  
+      padding-top: 20px; 
+      padding-bottom: 20px;
+      width: 200%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 0.6rem;
+      &--ingredient{
+         background-color: $color-tag1;
+      }
+      &--appareil{
+         background-color:$color-tag2;
+      }  
+      &--ustensiles{
+         background-color:$color-tag3;
+      }         
+   }
+   
+}
+
+.filtre-open{
+   >.bloc-search-resultat{
+      visibility: visible !important;
+   } 
+   &.blocs-filtre{
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+   }     
+}
+
+//style input
+.saisiTag{
+   display: none;
+   visibility:hidden;
+   min-width: 80%;
+   border:none;
+   padding: 0;
+   background-color: transparent;
+   color: #FFFFFF;
+   font-weight: bold;
+}
+.bloc-search{
+   height: 100%;
+}
+
+//Ranger les lignes depassant le conteneur de la description d'une recette.
+.textEllipsis{
+display: -webkit-box;
+-webkit-line-clamp: 6;
+//Pour -webkit-box-orient:vertical l'agrandissement et la réduction concernera le "height" et la 
+//taille initiale sera la valeur calculée de height.
+//La taille finale prendra en compte le min-height ou le max-height, s'il est spécifié.
+-webkit-box-orient: vertical;
+overflow: hidden;
+text-overflow: ellipsis;
+max-height: 120px;
+}
+
+//Section Filtre Tags.
+.filtre-tags{
+  @include flex (row,0,center);
+  margin-top: 1rem;
+  margin-bottom: 0.6rem;
+   .tag{
+      @include flex (row,0,center);
+      margin-right: 0.5rem;
+      padding:0.3rem;
+      border-radius: 4px;
+      &.ingredient{
+         background-color: $color-tag1;
+         color:$color-white;
+      }
+      &.appareil{
+         background-color: $color-tag2;
+         color:$color-white;
+      }
+      &.ustensile{
+         background-color: $color-tag3;
+         color:$color-white;
+      }
+      i{
+         margin-left: 0.3rem;
+      }
+   }
+}
+
+//Style message affiché dans le cas nbre recette =0
+
+.msg-no-recipe{
+   width: 100%;
+   
+   padding: 1.5rem;
+   border-radius: 0.4rem;
+   background-color:$color-tag3;
+   color :$color-white;
+   text-align: left;
+
+   box-shadow: 1 1 1 1;
+}
+
+

@@ -1,0 +1,15 @@
+.access-main{
+   background-color: $color2;
+   width: 8rem;
+   position: fixed;
+   top:4px;
+   left:calc(50% - 4rem);
+   display: none; 
+   color:black;
+   font-weight: bold;
+   border-radius: 4px;
+   padding: 0.2rem;
+   padding-left: 0.5rem;
+   padding-right: 0.5rem;
+}
+

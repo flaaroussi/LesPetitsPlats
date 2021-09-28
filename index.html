@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="shortcut icon" href="favicon.png" type="image/png">
+   <script src="https://kit.fontawesome.com/413ec6d2d3.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="public/css/main.css" />
+   <title>Les petits plats</title>
+</head>
+
+<body>
+   <header>
+      <!--logo-->
+      <section class="logo-container">
+         <figure>
+            <img src="/public/images/logo/les_petites_plats.png" alt="Les petits plats logo">
+         </figure>
+      </section>
+   </header>
+   <br><br><br><br>
+   <main>
+      <!--Réalisation d'un filtre selon 2 axes-->
+
+      <!--Axe1 de recherche:Barre de recherche horizontale-->
+      <section class="barreRecherche-container">
+         <input type="search" id="barreRecherche" name="barreRecherche" aria-label="Rechercher dans les recettes suivantes"
+            placeholder="Rechercher un ingrédient,appareil,ustensiles ou une recettes">
+         <i class="fas fa-search" id="recherche_button"></i>
+      </section>
+
+
+      <section class="filtre-tags"></section>
+
+      <!--Axe2 de recherche avancée :par mots:titre ingredients ustentils-->
+      <section>
+         <nav>
+
+            <ul class="menu">
+               <li class="blocs-filtre blocs-filtre--ingredient">                  
+                  <div class="bloc-search">
+                     
+                     <div class ="title-icone" data-parent=".blocs-filtre--ingredient">
+                        <input class="saisiTag recherche-ingredient" data-filtre="ingredient" type="text" placeholder="Rechercher un ingrédient">
+                        <p>Ingredients</p>
+                        <i class="fas fa-chevron-down"></i>
+                     </div> 
+                  </div>  
+                  <ul class="bloc-search-resultat bloc-search-resultat--ingredient">
+                     <!--Affichage liste des ingrédients des reccettes filtrées-->
+                  </ul>
+               </li>
+
+               <li class="blocs-filtre blocs-filtre--appareil">
+                  <div class="bloc-search">
+                     <div class ="title-icone" data-parent=".blocs-filtre--appareil">
+                        <input class="saisiTag recherche-appareil" data-filtre="appareil" type="text" placeholder="Rechercher un appareil">
+                        <p>Appareil</p>
+                        <i class="fas fa-chevron-down"></i>
+                     </div>
+                  </div>
+                  <ul class="bloc-search-resultat bloc-search-resultat--appareil">
+                    <!--Affichage liste des appareils des reccettes filtrées-->
+                  </ul>
+               </li>
+               
+               <li class="blocs-filtre blocs-filtre--ustensiles ">                  
+                  <div class="bloc-search">
+                     <div class ="title-icone" data-parent=".blocs-filtre--ustensiles">
+                        <input class="saisiTag" data-filtre="ustensiles" type="text" placeholder="Rechercher un ustensiles">
+                        <p>Ustensiles</p>
+                        <i class="fas fa-chevron-down"></i>
+                     </div> 
+                  </div>  
+                  <ul class="bloc-search-resultat bloc-search-resultat--ustensiles">
+                     <!--Affichage liste des ustensiles des reccettes filtrées-->
+                  </ul>
+               </li>
+
+            </ul>
+         </nav>         
+      </section>
+
+      
+  
+      <!--Blocs des recettes-->
+      <section id="recipes_container">
+         <!--code : affichage blocs recettes-->
+      </section>
+   </main>
+
+   <script src="./data/recipes.js"></script>
+   <script type="module" src="./public/js/main.js"></script>
+</body>
+
+</html>
