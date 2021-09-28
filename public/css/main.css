@@ -151,6 +151,11 @@ nav .menu {
   grid-gap: 0.6rem;
   margin-bottom: 1.5rem;
 }
+@media screen and (max-width: 650px) {
+  nav .menu {
+    grid-template-columns: 1fr;
+  }
+}
 nav li {
   height: 100%;
   text-decoration: none;
@@ -158,13 +163,6 @@ nav li {
   font-size: 0.8rem;
 }
 
-/*********************************/
-@media screen and (max-width: 650px) {
-  .menu {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-}
 /**********************************/
 .blocs-filtre {
   border-radius: 0.2rem;

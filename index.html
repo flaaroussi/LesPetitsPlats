@@ -28,7 +28,7 @@
       <section class="barreRecherche-container">
          <input type="search" id="barreRecherche" name="barreRecherche" aria-label="Rechercher dans les recettes suivantes"
             placeholder="Rechercher un ingrédient,appareil,ustensiles ou une recettes">
-         <i class="fas fa-search"></i>
+         <i class="fas fa-search" id="recherche_button"></i>
       </section>
 
 
@@ -43,7 +43,7 @@
                   <div class="bloc-search">
                      
                      <div class ="title-icone" data-parent=".blocs-filtre--ingredient">
-                        <input class="saisiTag" data-filtre="ingredient" type="text" placeholder="Rechercher un ingrédient">
+                        <input class="saisiTag recherche-ingredient" data-filtre="ingredient" type="text" placeholder="Rechercher un ingrédient">
                         <p>Ingredients</p>
                         <i class="fas fa-chevron-down"></i>
                      </div> 
@@ -56,7 +56,7 @@
                <li class="blocs-filtre blocs-filtre--appareil">
                   <div class="bloc-search">
                      <div class ="title-icone" data-parent=".blocs-filtre--appareil">
-                        <input class="saisiTag " data-filtre="appareil" type="text" placeholder="Rechercher un appareil">
+                        <input class="saisiTag recherche-appareil" data-filtre="appareil" type="text" placeholder="Rechercher un appareil">
                         <p>Appareil</p>
                         <i class="fas fa-chevron-down"></i>
                      </div>
