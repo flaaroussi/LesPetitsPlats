@@ -1,67 +1,62 @@
-
 /**
- * Class to display recipes on the index.
+ * Afficher les recettes .
  */
-
 import Utils from "../utils/Utils.js";
 import Ingredient from "./Ingredient.js";
 import Appareil from "./Appareil.js";
 import Ustensile from "./Ustensile.js";
 
 export default class Recipe {
-
-   /**
-    * Constructeur
-    */
    constructor(recipes) {
-      this.recipes = recipes;   
-        
+      this.recipes = recipes;
+      //Instanciation des classes qui permettent de gérer les filtres et l'affichages des
+      //trois blocs de recherche avancée.
       this.ingredientObjet = new Ingredient();
       this.appareilObjet = new Appareil();
-      this.ustensileObjet = new Ustensile();  
-
+      this.ustensileObjet = new Ustensile();
+      //Afficher les recettes
       this.displayRecipes(recipes);
+      //Excuter e 'click' à la input dans la barre de recherche ;;;;;;;;;;;;;;;;;;;;;;;;;;;
       this.doAttachEventBarreRecherche();
-      //272
+      //Executer evenement "click" sur la flèche des 3 blocs de recherche.
       this.doAttachClickToFiltre();
+      //Declencher la saisi dans les blocs de recherche avancée.
       this.doAttachSaisiInput();
    }
 
-   //Etape 1************
-
    /**
-    * Définir la fonction d'affichage des 50 recettes à partir de recipes.js et des recettes filtrées 
+    * Affiher les recettes (totalité des recettes ou bien recettes filtrées) à partir de recipes.js 
     * Afficher message si aucune recette ne contient le mot saisi.
-    * @param {*} recipes :données des recettes affichées dans le fichier js.
+    * On faits appelle aux fonctions doDisplayAppareil,doDisplayIngredient et doDisplayUstensiles 
+    * pour afficher les listes des ing,app,ust dans les blocs de recherche avancée
+    * @param {*} recipes :données des recettes dans le fichier js.
     */
    displayRecipes(recipes) {
       let elt = document.getElementById("recipes_container");
       elt.innerHTML = "";
-
       //vider les listes: ingredients+ustensiles+appareils (sous listes des blocs des recherches avancées).
       document.querySelector(".bloc-search-resultat--ingredient").innerHTML = "";
       document.querySelector(".bloc-search-resultat--appareil").innerHTML = "";
       document.querySelector(".bloc-search-resultat--ustensiles").innerHTML = "";
-
-      //vider les arrays des tags.
+      //vider les arrays des tags déja définis dans les classes.
       this.ingredientObjet.ingredients = [];
       this.appareilObjet.appareils = [];
       this.ustensileObjet.ustensiles = [];
-
-      //Si le nbre des recettes filtrées est sup à 0
+      //Si le nbre des recettes est sup à 0:
+      //on a ajouté cette condition pour pouvoir afficher le "msg" si la condition n'est pas respectée. 
       if (recipes.length > 0) {
          //activer le style de l'elt "recipes_container" déje annuler dans la condition "else".
          elt.style.display = "grid";
-         //Activer le style d'affichage des recetts désactivé dans la condition 'else' suivantes.
+         //Activer le style d'affichage des blocs de recherche désactivé dans la condition 'else' suivante.
          document.querySelector('.menu').style.display = "grid";
+
          recipes.forEach(currentRecipe => {
             let article = document.createElement("article");
             article.className = "recipe-card";
             article.innerHTML = this.getTemplateRecipe(currentRecipe);
             elt.appendChild(article);
          })
-
-         //Si aucune recette ne repond au condision on afficher le message.
+         //Si aucune recette ne répond au condition on afficher le message.
       } else {
          //annuler le style de l'elts parent "recipes_container" pour pouvoir afficher le mesage dans toute la page
          elt.style.display = "block";
@@ -79,9 +74,9 @@ export default class Recipe {
     * @returns {HTMLElement} :structure bloc recette
     */
    getTemplateRecipe(recipes) {
-      //Element vide en haut du bloc recette.
+      //Elt vide en haut du bloc recette.
       let template = `<div class="recipe-card_header"></div> `
-      //Element ou sera affiché : titre + timer + temps.
+      //Elt ou sera affiché : titre + timer + temps.
       template += `
             <div class="title-time-recipe">
                <p class="nom">${recipes.nom} </p>
@@ -89,9 +84,9 @@ export default class Recipe {
             </div>
             <div class="recipe-card_content">
             <div>`
-      //Element ou sera affiché les ingrédients.
+      //Elt ou sera affiché les ingrédients dans card recette.
       recipes.ingredients.forEach(currentIngredient => {
-         //si l'"unité" n'existe pas dans le data == rien à afficher (ne pas affiché undefined).
+         //si l"unité" n'existe pas dans le data == rien à afficher (ne pas affiché undefined).
          let uniteValue = "";
          if (currentIngredient.unite) {
             uniteValue = currentIngredient.unite;
@@ -115,7 +110,7 @@ export default class Recipe {
       })
       //Afficher les appareils dans le le bloc de recherche "appareil".
       this.appareilObjet.doDisplayAppareil(recipes.appareil);
-      //Afficher les appareils dans le le bloc de recherche "ustensiles".
+      //Afficher les ustensiles dans le le bloc de recherche "ustensiles".
       this.ustensileObjet.doDisplayUstensiles(recipes.ustensiles);
       //Element ou sera affiché la description de la recette.
       template += `</div>
@@ -138,30 +133,31 @@ export default class Recipe {
       //attacher un click sur la loupe pour relancer la recherche
       let btn = document.getElementById("recherche_button");
       btn.addEventListener('click', e => {
-         //filtrer et afficher les recettes qui contient le mot saisi.
+         //filtrer et afficher les recettes qui contient le mot saisi ou bien tags selectionnés.
          this.filterRecipes(elt.value);
       })
    }
-
-   /**
-    * Chercher le tag dans la liste des ingredients.
-    * @param {*} ingredients 
-    * @param {*} tag 
-    * @returns {boolean} 
+   /************************************************ */
+   /**?????????????????
+    * Chercher le mot dans la liste des ingredients.
+    * @param {*} ingredients array des ingrédients
+    * @param {*} mot 
+    * @returns {booléen} 
     */
-   isIngredientsHaveMot(ingredients, tag) {
-      let resultat = ingredients.some(currentIngredient => Utils.toLawer(currentIngredient.ingredient).includes(tag));
+   isIngredientsHaveMot(ingredients, mot) {
+      //si au moins un currentIngredient contient le mot >> return true , sinon return false
+      let resultat = ingredients.some(currentIngredient => Utils.toLawer(currentIngredient.ingredient).includes(mot));
       return resultat;
    }
-
+   /*****************************************************/
    /**
-    * Afficher les recettes filtrées selon mot saisi dans la barre de recherche principale ou par tags.
-    * @param {String} searchMot : mot clé;mot saisi;,,,,,,,,,,,,,,,
+    * Afficher les recettes filtrées "mot saisi recherche principale" ou par tags.
+    * @param {String} searchMot : mot saisi
     */
    filterRecipes(searchMot) {
       //recettes filtrées soit par mot saisi soit par tags.
       let recipesFiltree = [];
-      // Appliquer 1er filtre >> filtrer les recettes par mot saisi 
+      //Appliquer 1er filtre >> filtrer les recettes par mot saisi 
       if (searchMot && searchMot.length >= 3) {
          searchMot = Utils.toLawer(searchMot);
          recipesFiltree = this.recipes.filter(currentRecipe => {
@@ -169,20 +165,18 @@ export default class Recipe {
             let nom = Utils.toLawer(currentRecipe.nom);
             let description = Utils.toLawer(currentRecipe.description);
             if (nom.includes(searchMot) || description.includes(searchMot) || this.isIngredientsHaveMot(currentRecipe.ingredients, searchMot)) {
+               // true = le mot existe dans la recette donc ajouter la recette dans recipesFiltree.
                return true;
             } else {
                return false;
             }
-         })
+         });
       } else {
-         //Afficher toutes les recettes.
+         //pas de filtre si le mot saisi < 3 c'est a dire rien à faire
          recipesFiltree = this.recipes;
       }
 
-      /***************************************************************************** */
-      //Appliquer 2 eme filtre: Filtrer les recettes  par tags des ingredients s'il y en a .
-      /****************************************************************************** */
-
+      //Appliquer 2 eme filtre: Filtrer les recettes  par tags s'il y en a .
       //si au moins un tag ingredient existe(this.getIngredientTags()=tags selectionnés-tags fermés)
       if (this.ingredientObjet.getIngredientTags().length > 0) {
          recipesFiltree = recipesFiltree.filter(currentRecipe => {
@@ -230,7 +224,7 @@ export default class Recipe {
                   break;
             }
          });
-         //Arrêter l'evenement click(deja attaché à la fleche+input+titre) su l'input de saisi.
+         //Arrêter l'evenement click(deja attaché à la fleche+input+titre) sur l'input de saisi.
          currentInput.addEventListener("click", event => {
             event.stopPropagation();
             event.preventDefault();
@@ -238,11 +232,6 @@ export default class Recipe {
 
       })
    }
-   
-
-   
-   
-   
 
    /**
     * Attacher evenement "click" sur la flèche des 3 blocs de recherche.
@@ -255,17 +244,19 @@ export default class Recipe {
          btn.addEventListener('click', event => {
             //je dois garder stocker la classe de l'icone avant ouverture ou fermeture de filtre
             let iconeClassList = btn.querySelector("i").classList.value;
+            console.log(iconeClassList)
             // Fermer les filtres
             this.doCloseFiltresListes();
-            //Ouvrir le filtre si l'icone contient la classe 'down'
+            // si l'icone contient la classe 'down' alors Ouvrir le filtre
             if (iconeClassList.includes('fa-chevron-down')) {
-               //si la liste des elts est ouverte alor afficher l'input et cacher le titre de l'element.
+               
                btn.querySelector("p").style = "display:none;visibility:hidden";
                btn.querySelector("input").style = "display:block;visibility:visible";
 
-               //Ouvrir la liste de l'elt cliqué
+               //et changer la direction de la flèche.
+               //pourque se soit dynamique.
                let parent = btn.getAttribute('data-parent');
-               // parent = .blocs-filtre--ingredient,
+               console.log(parent)
                document.querySelector(parent).classList.add("filtre-open");
                let eleI = btn.querySelector('i').classList;
                eleI.remove("fa-chevron-down");
@@ -274,21 +265,21 @@ export default class Recipe {
          }
          );
       });
-   }   
+   }
 
    /**
-    * Fermer les filtres
+    * Fermer les filtres deja ouvertes
     * @param {*} 
     */
    doCloseFiltresListes() {
-      //Fermer tous les filtres ouverts
+      //Fermer tous les filtres ouvertes
       let eltBlocs = document.querySelectorAll('.blocs-filtre');
       eltBlocs.forEach(currentBloc => {
          //si le bloc contient "filtre-open"
          if (currentBloc.classList.contains("filtre-open")) {
             // supprimer "filtre-open" pour fermer la liste deja ouverte            
             currentBloc.classList.remove("filtre-open");
-            // et Changer la direction de la flèche.
+            // et changer la direction de la flèche.
             let eleI = currentBloc.querySelector('i').classList;
             eleI.remove("fa-chevron-up");
             eleI.add("fa-chevron-down");
@@ -296,6 +287,5 @@ export default class Recipe {
             currentBloc.querySelector("input").style = "display:hidden;visibility:hidden";
          }
       });
-
    }
 }

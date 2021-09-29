@@ -66,6 +66,7 @@ nav{
       grid-template-columns: 1fr 1fr 1fr;
       @media screen and (max-width: 650px) {
          grid-template-columns: 1fr;
+         
          height: 6rem;
       }
       grid-gap: 0.6rem;
