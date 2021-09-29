@@ -13,15 +13,18 @@ export default class Ustensile{
     */
     doDisplayUstensiles(ustensiles) {
       if (ustensiles) {
-         ustensiles.forEach(currentUstensile => {            
-            currentUstensile = Utils.capitalizeFirstLetter(currentUstensile);
-            if (this.ustensiles.includes(currentUstensile)) {
-               //return true c-a-d rien à faire
-               return true
-            } else {
-               //alors ajout le nouveau ustensiles dans le nouveau array des utensiles non dupliqués.
-               this.ustensiles.push(currentUstensile);
-               this.doAddUstensiles(currentUstensile);
+         ustensiles.forEach(currentUstensile => { 
+            let motSaisi = document.querySelector('.recherche-ustensile').value;
+            if(!motSaisi || Utils.toLawer(currentUstensile).includes(Utils.toLawer(motSaisi))){         
+               currentUstensile = Utils.capitalizeFirstLetter(currentUstensile);
+               if (this.ustensiles.includes(currentUstensile)) {
+                  //return true c-a-d rien à faire
+                  return true
+               } else {
+                  //alors ajout le nouveau ustensiles dans le nouveau array des utensiles non dupliqués.
+                  this.ustensiles.push(currentUstensile);
+                  this.doAddUstensiles(currentUstensile);
+               }
             }
          })
       }

@@ -1,5 +1,6 @@
 .logo-container{
   margin-top: 4rem;
+  margin-bottom: 1.5rem;
   width: 100%;
   height: 100px;
   display: flex;
@@ -19,6 +20,7 @@
   padding-right: 1rem;
   padding-top: 6px;
   padding-bottom: 6px;
+ 
   @include flex (row, space-between, center);
   input{
     width: 100%;

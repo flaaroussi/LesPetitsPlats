@@ -4,36 +4,34 @@ import Utils from "../utils/Utils.js";
 export default class Ingredient{
 
    constructor(){
-      //creer un array à partir de la liste des ingrédients des recettes filtrées
+      //creer une array à partir de la liste des ingrédients des recettes filtrées
       this.ingredients = [];
    }
 
    /**
-       * Afficher les ingrédients dans les blocs de la recherche avancée.
-       * @param {*} ingredient liste des ingredients resultat de la recherche barre principale.
-       */
+   * Afficher les ingrédients dans les blocs de la recherche avancée.
+   * @param {*} ingredient liste des ingredients resultat de la recherche barre principale.
+   */
     doDisplayIngredient(ingredient) {
-       //???????????????????????????????????????????? Avant d'afficher la tag on verifier si il y un mot rensigner dans la recherche avancer
-       let motRecherche = document.querySelector('.recherche-ingredient').value;
-       if(motRecherche.length > 0 && !Utils.toLawer(ingredient).includes(Utils.toLawer(motRecherche))){
-         return false;
-       }
-
-      //condition pour supprimer les dupliqués.
-      //Capitaliser la premiere lettre des ingrédients
-      ingredient = Utils.capitalizeFirstLetter(ingredient);
-      //si l'ingredient se trouve dans l'array des ingredient =>rien à faire
-      if (this.ingredients.includes(ingredient)) {
-         return true
-      } else {
-         //si l'ingredient ne se trouve pas dans l'array des ingredient=>ajout de l'ingrédient.
-         this.ingredients.push(ingredient);
-         this.doAddIngredient(ingredient);
-      }
+      //si l'ingredient contient le mot saisi alors afficher l'ingredient
+      let motSaisi = document.querySelector('.recherche-ingredient').value;
+      if(!motSaisi || Utils.toLawer(ingredient).includes(Utils.toLawer(motSaisi))){
+         //condition pour ne pas dupliquer les ingredient dans la sous liste.
+         //Capitaliser la premiere lettre des ingrédients
+         ingredient = Utils.capitalizeFirstLetter(ingredient);
+         //si l'ingredient ne se trouve pas dans l'array des ingredient => 
+         if (!this.ingredients.includes(ingredient)) {        
+            //afficher l'ingredient dans la DOM
+            this.doAddIngredient(ingredient);
+            //ajout de l'ingrédient dans l'array .         
+            this.ingredients.push(ingredient);        
+         }
+      }  
+      
    }
 
    /**
-   *Selectionner un ingredient et l'ajouter dans la liste des ingredients.
+   *ajouter l'ingredient dans la liste des ingredients.
    * @param {string} ingredient 
    */
    doAddIngredient(ingredient) {
