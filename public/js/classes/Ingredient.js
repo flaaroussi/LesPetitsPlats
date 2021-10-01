@@ -10,26 +10,19 @@ export default class Ingredient{
 
    /**
    * Afficher les ingrédients dans les blocs de la recherche avancée.
-   * @param {*} ingredient liste des ingredients resultat de la recherche barre principale.
    */
-    doDisplayIngredient(ingredient) {
-      //si l'ingredient contient le mot saisi alors afficher l'ingredient
-      let motSaisi = document.querySelector('.recherche-ingredient').value;
-      if(!motSaisi || Utils.toLawer(ingredient).includes(Utils.toLawer(motSaisi))){
-         //condition pour ne pas dupliquer les ingredient dans la sous liste.
-         //Capitaliser la premiere lettre des ingrédients
-         ingredient = Utils.capitalizeFirstLetter(ingredient);
-         //si l'ingredient ne se trouve pas dans l'array des ingredient => 
-         if (!this.ingredients.includes(ingredient)) {        
-            //afficher l'ingredient dans la DOM
-            this.doAddIngredient(ingredient);
-            //ajout de l'ingrédient dans l'array .         
-            this.ingredients.push(ingredient);        
+    doDisplayIngredient() {
+      let motSaisi = document.querySelector('.recherche-ingredient').value;      
+      //On trier la liste par ordre 
+      this.ingredients.sort();
+      this.ingredients.forEach(currentIngredient => {
+         //si le mot saisi =0 ou la liste des ingredients contient le mot saisi 
+         if (!motSaisi || Utils.toLawer(currentIngredient).includes(Utils.toLawer(motSaisi))) {
+            //alors ajouter l'ingredient dans la liste des ingredients.
+            this.doAddIngredient(currentIngredient);
          }
-      }  
-      
+      })
    }
-
    /**
    *ajouter l'ingredient dans la liste des ingredients.
    * @param {string} ingredient 
@@ -46,7 +39,6 @@ export default class Ingredient{
          this.doAddFiltreTags(li, 'ingredient');
       });
    }
-
    /**
     * Ajout d'un tag dans la section filtre/tag.
     * @param {*} li 

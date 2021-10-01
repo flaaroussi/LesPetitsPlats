@@ -4,11 +4,12 @@ export default class Appareil {
 
    constructor() {
       //creer un array à partir de la liste des appareils des recettes filtrées
+      //dans la sous.............
       this.appareils = [];
    }
 
    /**
-   * Filtrer et afficher la liste des appareils qui contiennent le mot saisi
+   * Filtrer et afficher la liste des appareils qui contiennent le mot saisi.
    * @param {*} motSaisi 
    */
    filterAppareils(motSaisi) {
@@ -41,26 +42,18 @@ export default class Appareil {
 
    /**
     * Afficher les appareils(resultat recherche barre principale) dans les blocs de recherche avancée.
-    * @param {*} appareil 
-    * @returns 
     */
-   doDisplayAppareil(appareil) {
-      //si l'appareil existe dans le js 
-      if (appareil) {
-         let motSaisi = document.querySelector('.recherche-appareil').value;
-         if(!motSaisi || Utils.toLawer(appareil).includes(Utils.toLawer(motSaisi))){
-            //donc if ::::::::::::::::::::
-            if (this.appareils.includes(appareil)){
-               return true
-               //si non ::::::::::::::::::::
-            } else {
-               //alors ajout le nouveau appareil dans le nouveau array des appareils non dupliqués
-               this.appareils.push(appareil);
-               //afficher liste des appareils non dupliqués ,,,,,,,,,,,,,,,,,,,,,,,,,
-               this.doAddAppareil(appareil);
-            }
+   doDisplayAppareil() {
+       //si l'appareil existe dans le js 
+      let motSaisi = document.querySelector('.recherche-appareil').value;
+      //On trier la liste par ordre
+      this.appareils.sort();
+      this.appareils.forEach(currentAppareil =>{
+         if(!motSaisi || Utils.toLawer(currentAppareil).includes(Utils.toLawer(motSaisi))){
+            //afficher liste des appareils non dupliqués ,,,,,,,,,,,,,,,,,,,,,,,,,
+            this.doAddAppareil(currentAppareil);
          }
-      }
+      })
    }
 
    /**
