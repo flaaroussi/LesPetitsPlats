@@ -9,32 +9,22 @@ export default class Ustensile{
 
    /**
     * Afficher les ustensiles(resultat recherche barre principale) dans les blocs de recherche avancée.
-    * @param {*} ustensiles 
     */
-    doDisplayUstensiles(ustensiles) {
-      if (ustensiles) {
-         ustensiles.forEach(currentUstensile => { 
-            let motSaisi = document.querySelector('.recherche-ustensile').value;
-            if(!motSaisi || Utils.toLawer(currentUstensile).includes(Utils.toLawer(motSaisi))){         
-               currentUstensile = Utils.capitalizeFirstLetter(currentUstensile);
-               if (this.ustensiles.includes(currentUstensile)) {
-                  //return true c-a-d rien à faire
-                  return true
-               } else {
-                  //alors ajout le nouveau ustensiles dans le nouveau array des utensiles non dupliqués.
-                  this.ustensiles.push(currentUstensile);
-                  this.doAddUstensiles(currentUstensile);
-               }
-            }
-         })
-      }
+   doDisplayUstensiles() {
+      let motSaisi = document.querySelector('.recherche-ustensile').value;
+      this.ustensiles.sort();
+      this.ustensiles.forEach(currentUstensile => { 
+         if(!motSaisi || Utils.toLawer(currentUstensile).includes(Utils.toLawer(motSaisi))){         
+            this.doAddUstensiles(currentUstensile);
+         }   
+      })
    }
 
    /**
     * Filtrer et afficher la liste des ustensiles qui contiennent le mot saisi
     * @param {*} motSaisi 
     */
-    filterUstensiles(motSaisi) {
+   filterUstensiles(motSaisi) {
       let resultat = [];
       motSaisi = Utils.toLawer(motSaisi);
       resultat = this.ustensiles.filter(currentUstensile => {
