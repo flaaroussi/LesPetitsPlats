@@ -16,7 +16,7 @@
        this.ustensileObjet = new Ustensile();
        //Afficher les recettes
        this.displayRecipes(recipes);
-       //Excuter e 'click' à la input dans la barre de recherche ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       //Excuter 'click' à l' input dans la barre de recherche ;;;;;;;;;;;;;;;;;;;;;;;;;;;
        this.doAttachEventBarreRecherche();
        //Executer evenement "click" sur la flèche des 3 blocs de recherche.
        this.doAttachClickToFiltre();

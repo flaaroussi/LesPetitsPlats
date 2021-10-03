@@ -13,7 +13,7 @@ export default class Ingredient{
    */
     doDisplayIngredient() {
       let motSaisi = document.querySelector('.recherche-ingredient').value;      
-      //On trier la liste par ordre 
+      //On trier la liste des ingrédients par ordre aalphabétiques 
       this.ingredients.sort();
       this.ingredients.forEach(currentIngredient => {
          //si le mot saisi =0 ou la liste des ingredients contient le mot saisi 
@@ -50,10 +50,7 @@ export default class Ingredient{
       //On recupere la liste des tags.
       let tagsListe = this.getIngredientTags();      
       //On garde les tags qui respecte la condition :applique un filtre sur tagsListe(span) et 
-      ////////////////
-      /////////////////////
       tagsListe = tagsListe.filter(currentTag => Utils.toLawer(currentTag.textContent) == Utils.toLawer(li.textContent));
-      console.log(tagsListe)
       //si le tag existe dans l'array des tags(array retourné par la fonction )
       if (tagsListe.length > 0) {
          //rien à faire
@@ -94,7 +91,6 @@ export default class Ingredient{
          Utils.doRelanceRecherche();
       })
    }
- 
 
    /**
       * Filtrer et afficher la liste des ingredients qui contiennent le mot saisi dans l'input .
@@ -124,7 +120,7 @@ export default class Ingredient{
     */
     isRecipesHaseTagsIngredient(recipe) {
       //On crée une array à partir de la fonction getIngredientTags qui nous retourne tags=tagsselectionné-tags fermés
-      // au lieu l'elt HTML '.filtre-tags .ingredient span' qui va nous donner tags = tags selectionés et va garder les tags fermés.
+      //au lieu l'elt HTML '.filtre-tags .ingredient span' qui va nous donner tags = tags selectionés et va garder les tags fermés.
       let tagsListe = this.getIngredientTags();
       let resultat = [];
       resultat = recipe.ingredients.filter(currentIng => {
