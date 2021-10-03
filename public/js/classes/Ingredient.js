@@ -31,6 +31,7 @@ export default class Ingredient{
       //creer structure HTML pour un ingredient
       let elt = document.querySelector(".bloc-search-resultat--ingredient");
       let li = Utils.creatEltHtml("li", "search-ingredient");
+      li.title = "Cliquer içi pour rechercher par ce mot"
       li.innerHTML = ingredient;
       elt.appendChild(li);
       //Attacher "click" à l'ingrédient.
@@ -59,7 +60,7 @@ export default class Ingredient{
       } else {   
          //on crée la structure HTML de la liste des tags
          let tag = Utils.creatEltHtml("div", "tag " + filtre);
-         tag.innerHTML = `<span>${li.textContent}</span><i class="far fa-times-circle"></i>`;
+         tag.innerHTML = `<span>${li.textContent}</span><i class="far fa-times-circle" title="Supprimer"></i>`;
          sectionTag.appendChild(tag);
          //......................
          this.doCloseTag(tag);
@@ -80,7 +81,7 @@ export default class Ingredient{
 
    /**
     * Fermer le tag cliqué
-    * @param {string} tag 
+    * @param {Element} tag 
     */
     doCloseTag(tag) {
       let icone = tag.querySelector('.far');

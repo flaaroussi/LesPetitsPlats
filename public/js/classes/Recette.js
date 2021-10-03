@@ -55,6 +55,10 @@
              article.className = "recipe-card";
              article.innerHTML = this.getTemplateRecipe(currentRecipe);
              elt.appendChild(article);
+             //Attacher click pour selectionner une recette
+             article.addEventListener("click", event => {
+                this.doSelectedRecepie(article)
+             })
           })
           //Si aucune recette ne répond au condition on afficher le message.
        } else {
@@ -74,7 +78,19 @@
        this.ustensileObjet.doDisplayUstensiles();
  
     }
- 
+    /**
+     * Selectionner la recette à qui on attaché un "click"
+     * @param {Element} recipe :recette selected.
+     */
+    
+    doSelectedRecepie(recipe){
+      //il faut supprimer la selection si elle existe avant d'attacher la classe recipe-card--selected.
+      if(document.querySelector(".recipe-card--selected")){
+         document.querySelector(".recipe-card--selected").classList.remove("recipe-card--selected");
+      }
+      //quand je clique sur la recette >> attacher une class "recipe-card--selected" à la recette
+      recipe.classList.add("recipe-card--selected");
+    }
     /**
      * Créer la structure HTML du bloc recette
      * @param {array} recipes :data des recettes à
