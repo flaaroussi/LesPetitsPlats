@@ -169,16 +169,37 @@ export default class Recipe {
          })
       }
       /************************************************ */
-      /**?????????????????
-       * Chercher le mot dans la liste des ingredients.
+      /**
+       * Chercher le mot dans l'array'des ingredients.
        * @param {*} ingredients array des ingrédients
        * @param {*} mot 
        * @returns {booléen} 
        */
       isIngredientsHaveMot(ingredients, mot) {
+         //si au moins un Ingredient contient le mot >> return true , sinon return false
+         let totalIngredient = ingredients.length;
+         let resultat = [];
+         for(let i=0; i<totalIngredient; i++){
+            let ingredient = ingredients[i];
+            if(Utils.toLawer(ingredient.ingredient).includes(mot)){
+               resultat.push(ingredient);
+            }
+         }
+         if(resultat.length > 0){
+            return true;
+         }else{
+            return false;
+         }
+
+
+
+
+         /** ancien algorithme
          //si au moins un currentIngredient contient le mot >> return true , sinon return false
          let resultat = ingredients.some(currentIngredient => Utils.toLawer(currentIngredient.ingredient).includes(mot));
          return resultat;
+         */
+
       }
       /*****************************************************/
       /**
@@ -191,6 +212,24 @@ export default class Recipe {
          //Appliquer 1er filtre >> filtrer les recettes par mot saisi 
          if (searchMot && searchMot.length >= 3) {
             searchMot = Utils.toLawer(searchMot);
+
+            //pourque le traitement du calcul de nbre des recettes se fait une seul fois.on déclare ce nbre avant la boucle(gain en performance)
+            let totalRecipes = this.recipes.length;
+            for(let i =0; i<totalRecipes; i++){
+               let recipe = this.recipes[i];
+               let nom = Utils.toLawer(recipe.nom);
+               let description = Utils.toLawer(recipe.description);
+
+               if (nom.includes(searchMot) || description.includes(searchMot) || this.isIngredientsHaveMot(recipe.ingredients, searchMot)) {
+                  //le mot existe dans la recette donc ajouter la recette dans recipesFiltree.
+
+                 recipesFiltree.push(recipe);
+
+               }   
+            }
+
+
+            /**ancien algorithme
             recipesFiltree = this.recipes.filter(currentRecipe => {
                // filtre sur le nom
                let nom = Utils.toLawer(currentRecipe.nom);
@@ -202,31 +241,84 @@ export default class Recipe {
                   return false;
                }
             });
+            */
+
+
          } else {
             //pas de filtre si le mot saisi < 3 c'est a dire rien à faire
             recipesFiltree = this.recipes;
          }
 
-         //Appliquer 2 eme filtre: Filtrer les recettes  par tags s'il y en a .
+         /*Appliquer 2 eme filtre: Filtrer les recettes  par tags s'il y en a */
          //si au moins un tag ingredient existe(this.getIngredientTags()=tags selectionnés-tags fermés)
          if (this.ingredientObjet.getIngredientTags().length > 0) {
+            // Nouveau algorithme 2
+            let totalRecipes = recipesFiltree.length;
+            //tableau intermédiare qui stock uniquement les recettes qui contiennet les tags
+            let resulatFiltreTags = [];
+            for(let i=0; i<totalRecipes;i++){
+               let currentRecipe = recipesFiltree[i];
+               let resultatSearchTag = this.ingredientObjet.isRecipesHaseTagsIngredient(currentRecipe);
+               // si la raccette ne contient pas les tags >> donc supprime cette recette 
+               if(resultatSearchTag === true){
+                  resulatFiltreTags.push(currentRecipe);
+               }
+            }
+            //les recettes resultat de la recherche principale = recettes qui contiennent le tags.
+            recipesFiltree = resulatFiltreTags;
+
+
+
+            /** ancien traitement
             recipesFiltree = recipesFiltree.filter(currentRecipe => {
                //on crée et on retourne une nouvelle array "recipesFiltree"  et on ajoute la recette qui contient le tag.
                return this.ingredientObjet.isRecipesHaseTagsIngredient(currentRecipe);
             })
+            */
          }
-         // Si la liste des "tags app" est sup à 0 alors ;;;;;;;;;;;;;;;;;;
+
+         // Si la liste des "tags appareils" est sup à 0 alors rechecher les recettes qui contient les tags appareils.
          if (this.appareilObjet.getAppareilTags().length > 0) {
+            //Nouveau algorithme 2
+            let totalRecipes = recipesFiltree.length;
+            //tableau intermédiare qui stock uniquement les recettes qui contiennet les tags
+            let resultatFiltreTags =[]
+            for(let i=0; i<totalRecipes; i++){
+               let currentRecipe = recipesFiltree[i];
+               let resultatSearchTag = this.appareilObjet.isRecipesHaseTagsAppareil(currentRecipe);
+               if(resultatSearchTag === true){
+                  resultatFiltreTags.push(currentRecipe);
+               }
+            }
+            recipesFiltree = resultatFiltreTags;
+
+            /** ancien algorithme
             recipesFiltree = recipesFiltree.filter(currentRecipe => {
                //on crée et on retourne une nouvelle array "recipesFiltree"  et on ajoute la recette qui contient le tag.
                return this.appareilObjet.isRecipesHaseTagsAppareil(currentRecipe);
             })
+            */
          }
-         if (this.ustensileObjet.getUstensileTags().length > 0) {
+         // Si la liste des "tags ustensiles" est sup à 0 alors rechecher les recettes qui contient les tags appareils.
+         if (this.ustensileObjet.getUstensileTags().length > 0) {    
+            //Nouveau algorithme 2
+            let totalRecipes = recipesFiltree.length;
+            let resultatFiltreTags =[]
+            for(let i=0; i<totalRecipes; i++){
+               let currentRecipe = recipesFiltree[i];
+               let resultatSearchTag = this.ustensileObjet.isRecipesHaseTagsUstensile(currentRecipe);
+               if(resultatSearchTag === true){
+                  resultatFiltreTags.push(currentRecipe);
+               }
+            }
+            recipesFiltree = resultatFiltreTags;
+
+            /** ancien traitement
             recipesFiltree = recipesFiltree.filter(currentRecipe => {
                //on crée et on retourne une nouvelle array "recipesFiltree"  et on ajoute la recette qui contient le tag.
                return this.ustensileObjet.isRecipesHaseTagsUstensile(currentRecipe);
             })
+            */
          }
          //Fin des conditions.
 
