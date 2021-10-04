@@ -27,10 +27,24 @@ export default class Ustensile{
    filterUstensiles(motSaisi) {
       let resultat = [];
       motSaisi = Utils.toLawer(motSaisi);
+      //Nouveau algorithme
+      let totalustensiles = this.ustensiles.length;
+      for(let i = 0; i < totalustensiles; i++){
+         let ustensile = this.ustensiles[i];
+         ustensile = Utils.toLawer(ustensile);
+         if(ustensile.includes(motSaisi)){
+            resultat.push(ustensile);
+         }
+      }
+      //Fin nouveau algorithme.
+
+      /**ancien algorithme
       resultat = this.ustensiles.filter(currentUstensile => {
          currentUstensile = Utils.toLawer(currentUstensile);
          return currentUstensile.includes(motSaisi);
       });
+      */
+
       // vider la liste des ingrédients
       document.querySelector(".bloc-search-resultat--ustensiles").innerHTML = "";
       resultat.forEach(currentUstensile => {
@@ -44,6 +58,7 @@ export default class Ustensile{
    doAddUstensiles(currentUstensile) {
       let elt = document.querySelector(".bloc-search-resultat--ustensiles");
       let li = Utils.creatEltHtml("li", "search-ustensile");
+      li.title = "Cliquer içi pour rechercher ce mot";
       li.innerHTML = currentUstensile;
       elt.appendChild(li);
       li.addEventListener("click", event => {
@@ -54,25 +69,39 @@ export default class Ustensile{
    /**
     * Ajout d'un tag dans la section filtre/tag.
     * @param {*} li 
-    * @param {*} filtre =ingrédient,appareil ou ustentile c'est pour appliquer un style au tag 
+    * @param {*} filtre =ingrédient,appareil ou ustensile c'est pour appliquer un style au tag 
     */
     doAddFiltreTags(li, filtre) {
       let sectionTag = document.querySelector(".filtre-tags");
       //condition pour ne pas afficher les tags dupliqués.
       //On recupere la liste des tags.
-      let tagsListe = this.getUstensileTags();      
-      //On garde les tags qui respecte la condition :applique un filtre sur tagsListe(span) et 
+      let tagsListe = this.getUstensileTags();
+      //Nouveau algorithme
+      //on crée une array provisoire 
+      let tagListeSelected = [];
+      let totalTagsListe = tagsListe.length;
+      for(let i = 0;i < totalTagsListe; i++ ){
+         let tag = tagsListe[i];
+         tag.textContent = Utils.toLawer(tag.textContent);
+         li.textContent = Utils.toLawer(li.textContent);
+         if(tag.textContent == li.textContent){
+            tagListeSelected.push(tag.textContent);
+         }
+      }
+      
+      //Fin nouveau algorithme.
+      /**ancien algorithme
+      //On garde les tags qui respecte la condition  currentTag.textContent=li.textContent
       tagsListe = tagsListe.filter(currentTag => Utils.toLawer(currentTag.textContent) == Utils.toLawer(li.textContent));
-      //si li.textContent =elt selectionné est egal a currentTag.textContent=tag ;;;;;;;;;;;;;;;;;;;;;;;
-      //si le tag existe dans l'array des tags(array retourné par la fonction )
-      if (tagsListe.length > 0) {
+      */
+      if (tagListeSelected.length > 0) {
          //rien à faire
          return true
          //si non ajout du tag dans la liste des tags
       } else {   
          //on crée la structure HTML de la liste des tags
          let tag = Utils.creatEltHtml("div", "tag " + filtre);
-         tag.innerHTML = `<span>${li.textContent}</span><i class="far fa-times-circle"></i>`;
+         tag.innerHTML = `<span class="tag-libelle">${li.textContent}</span><i class="far fa-times-circle" title="Supprimer"></i>`;
          sectionTag.appendChild(tag);
          //......................
          this.doCloseTag(tag);
@@ -101,7 +130,7 @@ export default class Ustensile{
     * @returns 
     */
     getUstensileTags() {
-      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .ustensile span'));
+      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .ustensile span.tag-libelle'));
       return tagsListe;
    }
 

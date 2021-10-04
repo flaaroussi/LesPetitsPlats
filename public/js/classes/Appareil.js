@@ -10,21 +10,35 @@ export default class Appareil {
 
    /**
    * Filtrer et afficher la liste des appareils qui contiennent le mot saisi.
-   * @param {*} motSaisi 
+   * @param {String} motSaisi  dans le bloc de recheche avancée.
    */
    filterAppareils(motSaisi) {
       let resultat = []
       motSaisi = Utils.toLawer(motSaisi);
+      //Nouveau algorithme
+      let totalAppareils = this.appareils.length;
+      for(let i=0; i<totalAppareils; i++){
+         let appareil = this.appareils[i];
+         appareil = Utils.toLawer(appareil);
+         if(appareil.includes(motSaisi)){
+            resultat.push(appareil);
+         }
+      }
+      //Fin nouveau algorithme.
+      /**ancien algorithme
       resultat = this.appareils.filter(currentAppareil => {
          currentAppareil = Utils.toLawer(currentAppareil);
          return currentAppareil.includes(motSaisi);
       });
-      // vider la liste des ingrédients
+      */
+
+      // vider la liste des appareils
       document.querySelector(".bloc-search-resultat--appareil").innerHTML = "";
-      resultat.forEach(currentAppareil => {
-         this.doAddAppareil(currentAppareil);
+      resultat.forEach(appareil => {
+         this.doAddAppareil(appareil);
       })
    }
+
    /**
     * Selectionner un appareil et l'ajouter dans la liste des appareils.
     * @param {*} appareil 
@@ -33,6 +47,7 @@ export default class Appareil {
    doAddAppareil(appareil) {
       let elt = document.querySelector(".bloc-search-resultat--appareil");
       let li = Utils.creatEltHtml("li", "search-appareil");
+      li.title = "Cliquer içi pour rechercher ce mot";
       li.innerHTML = appareil;
       elt.appendChild(li);
       li.addEventListener("click", event => {
@@ -66,18 +81,31 @@ export default class Appareil {
       //condition pour ne pas afficher les tags dupliqués.
       //On recupere la liste des tags.
       let tagsListe = this.getAppareilTags();
-      //On garde les tags qui respecte la condition :applique un filtre sur tagsListe(span) et 
+      //Nouveau algorithme
+      //on crée une array provisoire 
+      let tagListeSelected = [];
+      let totalTagsListe = tagsListe.length;
+      for(let i = 0;i < totalTagsListe; i++ ){
+         let tag = tagsListe[i];
+         tag.textContent = Utils.toLawer(tag.textContent);
+         li.textContent = Utils.toLawer(li.textContent);
+         if(tag.textContent == li.textContent){
+            tagListeSelected.push(tag.textContent);
+         }
+      }
+      //Fin nouveau algorithme.
+      /**ancien algorithme
+      //On garde les tags qui respecte la condition 
       tagsListe = tagsListe.filter(currentTag => Utils.toLawer(currentTag.textContent) == Utils.toLawer(li.textContent));
-      //si li.textContent =elt selectionné est egal a currentTag.textContent=tag ;;;;;;;;;;;;;;;;;;;;;;;
-      //si le tag existe dans l'array des tags(array retourné par la fonction )
-      if (tagsListe.length > 0) {
+      */
+      if (tagListeSelected.length > 0) {
          //rien à faire
          return true
          //si non ajout du tag dans la liste des tags
       } else {
          //on crée la structure HTML de la liste des tags
          let tag = Utils.creatEltHtml("div", "tag " + filtre);
-         tag.innerHTML = `<span>${li.textContent}</span><i class="far fa-times-circle"></i>`;
+         tag.innerHTML = `<span class="tag-libelle">${li.textContent}</span><i class="far fa-times-circle" title="Supprimer"></i>`;
          sectionTag.appendChild(tag);
          //......................
          this.doCloseTag(tag);
@@ -93,7 +121,7 @@ export default class Appareil {
     * @returns 
     */
    getAppareilTags() {
-      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .appareil span'));
+      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .appareil span.tag-libelle'));
       return tagsListe;
    }
 

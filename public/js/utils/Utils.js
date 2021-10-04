@@ -28,7 +28,7 @@ export default class Utils {
    /**
     * ???????????????????????????????????le click se declenche automatiquement sur la loupe qui permet de lancer le filtre et l'affichage.
     */
-   static doRelanceRecherche(){
+   static doRelanceRecherche(){     
       document.getElementById("recherche_button").dispatchEvent(new Event('click'));
    }
 
