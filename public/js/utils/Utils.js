@@ -18,7 +18,10 @@ export default class Utils {
    }
 
    static capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+      if(string){
+         return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+      }
+
     }
 
     // fonction permet de cliquer sur le button (loup) pour lancer la recherche;;;;;;;;;;;;;;;;;;;;
@@ -29,6 +32,4 @@ export default class Utils {
       document.getElementById("recherche_button").dispatchEvent(new Event('click'));
    }
 
-   
-  
 }
