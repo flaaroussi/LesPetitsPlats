@@ -1,20 +1,31 @@
-# FaizaLaaroussi_7_30082021
+## A propos
+
+Projet n°7 réalisé dans le cadre de ma formation *Developpeur Front-end* au sein de l'école OpenClassRooms
+
+## Présentation du projet
+Les petits plats est une application web de recherche des recettes de cuisine, les utilisateurs pouvent chercher de recettes en rapport avec des ingrédients, des ustensiles et des équipements.
+
+## Lien pour tester l'application
+
 <a href="https://flaaroussi.github.io/FaizaLaaroussi_7_30082021">https://flaaroussi.github.io/FaizaLaaroussi_7_30082021</a>
+
+## Benchmark
+Afin de tester la fonctionnalité de recherche principale, un benchmark à été effectué sur les deux algorithmes
+
+**Lien pour tester le benchmark : https://jsben.ch/18kZU*
 
 
 ## Compétances acquises dans ce projet :
-   * ....
-  
+   * Analyser un problème informatique
+   * Développer un alogorithme pour résoudre un problème 
 
 
 ## Technologies:
    * HTML5
    * SCSS / CSS
-   * Javascript (ES6, Programmation orientée objet)
+   * Javascript (Programmation orientée objet)
 
-## Compatibilité :
-   * ...
-   
-
-
+# Outils
+   * Visual Studio Code
+   * Git
       
