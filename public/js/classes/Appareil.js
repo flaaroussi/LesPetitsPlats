@@ -47,7 +47,7 @@ export default class Appareil {
    doAddAppareil(appareil) {
       let elt = document.querySelector(".bloc-search-resultat--appareil");
       let li = Utils.creatEltHtml("li", "search-appareil");
-      li.title = "Cliquer içi pour rechercher ce mot";
+      li.title = "Cliquer içi pour rechercher cet appareil";
       li.innerHTML = appareil;
       elt.appendChild(li);
       li.addEventListener("click", event => {

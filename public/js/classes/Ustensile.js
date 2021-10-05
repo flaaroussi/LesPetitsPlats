@@ -58,7 +58,7 @@ export default class Ustensile{
    doAddUstensiles(currentUstensile) {
       let elt = document.querySelector(".bloc-search-resultat--ustensiles");
       let li = Utils.creatEltHtml("li", "search-ustensile");
-      li.title = "Cliquer içi pour rechercher ce mot";
+      li.title = "Cliquer içi pour rechercher cet ustensile";
       li.innerHTML = currentUstensile;
       elt.appendChild(li);
       li.addEventListener("click", event => {

@@ -42,13 +42,9 @@ export default class Recipe {
       this.ingredientObjet.ingredients = [];
       this.appareilObjet.appareils = [];
       this.ustensileObjet.ustensiles = [];
-      /////
 
-
-      //////////
       //Si le nbre des recettes est sup à 0:
       //on a ajouté cette condition pour pouvoir afficher le "msg" si la condition n'est pas respectée. 
-
       if (recipes.length > 0) {
          //activer le style de l'elt "recipes_container" déje annuler dans la condition "else".
          elt.style.display = "grid";
@@ -60,15 +56,13 @@ export default class Recipe {
             article.className = "recipe-card";
             article.innerHTML = this.getTemplateRecipe(currentRecipe);
             elt.appendChild(article);
-            //////////////////////////////////////selectionner une recette/////////////////
-            
 
+            //Selectionner une recette
             article.addEventListener("click", event => {
-              this.doSelectedRecepie(article);
-
+               this.doSelectedRecepie(article);
             })
          })
-         //Si aucune recette ne répond au condition on affiche le message.
+      //Si aucune recette ne répond au condition on affiche le message.
       } else {
          //annuler le style de l'elts parent "recipes_container" pour pouvoir afficher le mesage dans toute la page
          elt.style.display = "block";
@@ -90,19 +84,19 @@ export default class Recipe {
 
    }
 
-    /**
-     * Selectionner la recette à qui on attaché un "click"
-     * @param {Element} recipe :recette selected.
-     */
-    
-     doSelectedRecepie(recipe){
+   /**
+    * Selectionner la recette à qui on a attaché un "click"
+    * @param {Element} recipe :recette selected.
+    * 
+    */
+   doSelectedRecepie(recipe) {
       //il faut supprimer la selection si elle existe avant d'attacher la classe recipe-card--selected.
-      if(document.querySelector(".recipe-card--selected")){
+      if (document.querySelector(".recipe-card--selected")) {
          document.querySelector(".recipe-card--selected").classList.remove("recipe-card--selected");
       }
-      //quand je clique sur la recette >> attacher une class "recipe-card--selected" à la recette
+      //quand je clique sur la recette >> attacher une classe "recipe-card--selected" à la recette
       recipe.classList.add("recipe-card--selected");
-    }
+   }
 
    /**
     * Créer la structure HTML du bloc recette
@@ -228,7 +222,7 @@ export default class Recipe {
       */
 
    }
- 
+
    /**
     * Afficher les recettes filtrées "mot saisi recherche principale" ou par tags.
     * @param {String} searchMot : mot saisi
@@ -246,16 +240,11 @@ export default class Recipe {
             let recipe = this.recipes[i];
             let nom = Utils.toLawer(recipe.nom);
             let description = Utils.toLawer(recipe.description);
-
             if (nom.includes(searchMot) || description.includes(searchMot) || this.isIngredientsHaveMot(recipe.ingredients, searchMot)) {
                //le mot existe dans la recette donc ajouter la recette dans recipesFiltree.
-
                recipesFiltree.push(recipe);
-
             }
          }
-
-
          /**ancien algorithme
          recipesFiltree = this.recipes.filter(currentRecipe => {
             // filtre sur le nom
@@ -269,8 +258,6 @@ export default class Recipe {
             }
          });
          */
-
-
       } else {
          //pas de filtre si le mot saisi < 3 c'est a dire rien à faire
          recipesFiltree = this.recipes;
@@ -293,8 +280,6 @@ export default class Recipe {
          }
          //les recettes resultat de la recherche principale = recettes qui contiennent le tags.
          recipesFiltree = resulatFiltreTags;
-
-
 
          /** ancien traitement
          recipesFiltree = recipesFiltree.filter(currentRecipe => {

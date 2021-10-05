@@ -6,6 +6,7 @@ export default class Ingredient{
    constructor(){
       //creer une array à partir de la liste des ingrédients des recettes filtrées
       this.ingredients = [];
+      
    }
 
    /**
@@ -31,7 +32,7 @@ export default class Ingredient{
       //creer structure HTML pour un ingredient
       let elt = document.querySelector(".bloc-search-resultat--ingredient");
       let li = Utils.creatEltHtml("li", "search-ingredient");
-      li.title = "Cliquer içi pour rechercher ce mot";
+      li.title = "Cliquer içi pour rechercher cet ingredient";
       li.innerHTML = ingredient;
       elt.appendChild(li);
       //Attacher "click" à l'ingrédient.
