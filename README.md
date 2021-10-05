@@ -1,6 +1,6 @@
 ## A propos
 
-Projet n°7 réalisé dans le code de formation developpeur Front-end de l'école    OpenClassRooms
+Projet n°7 réalisé dans le cadre de ma formation *Developpeur Front-end* au sein de l'école OpenClassRooms
 
 ## Présentation du projet
 Les petits plats est une application web de recherche des recettes de cuisine, les utilisateurs pouvent chercher de recettes en rapport avec des ingrédients, des ustensiles et des équipements.
@@ -12,11 +12,11 @@ Les petits plats est une application web de recherche des recettes de cuisine, l
 ## Benchmark
 Afin de tester la fonctionnalité de recherche principale, un benchmark à été effectué sur les deux algorithmes
 
-** lien pour tester le benchmark : https://jsben.ch/18kZU**
+**Lien pour tester le benchmark : https://jsben.ch/18kZU*
 
 
 ## Compétances acquises dans ce projet :
-   * analyse un probléme informatique
+   * Analyser un problème informatique
    * Développer un alogorithme pour résoudre un problème 
 
 
