@@ -1,22 +1,22 @@
 
 import Utils from "../utils/Utils.js";
 
-export default class Ingredient{
+export default class Ingredient {
 
-   constructor(){
-      //creer une array à partir de la liste des ingrédients des recettes filtrées
+   constructor() {
+      //Créer un array pour stocker la liste des ingrédients des recettes filtrées
       this.ingredients = [];
    }
 
    /**
    * Afficher les ingrédients dans les blocs de la recherche avancée.
    */
-    doDisplayIngredient() {
-      let motSaisi = document.querySelector('.recherche-ingredient').value;      
-      //On trier la liste des ingrédients par ordre aalphabétiques 
+   doDisplayIngredient() {
+      let motSaisi = document.querySelector('.recherche-ingredient').value;
+      //On trier la liste des ingrédients par ordre alphabétique
       this.ingredients.sort();
       this.ingredients.forEach(currentIngredient => {
-         //si le mot saisi =0 ou la liste des ingredients contient le mot saisi 
+         //si le mot saisi =0 ou la liste des ingredients contient le mot saisi dans les blocs de la recherche avancée.
          if (!motSaisi || Utils.toLawer(currentIngredient).includes(Utils.toLawer(motSaisi))) {
             //alors ajouter l'ingredient dans la liste des ingredients.
             this.doAddIngredient(currentIngredient);
@@ -24,11 +24,11 @@ export default class Ingredient{
       })
    }
    /**
-   *ajouter l'ingredient dans la liste des ingredients.
+   *ajouter l'ingredient dans la liste des ingredients/attaché un click à l'ingrédient/ajouté l'ingredient cliqué sous forme de tag.
    * @param {string} ingredient 
    */
    doAddIngredient(ingredient) {
-      //creer structure HTML pour un ingredient
+      //créer la structure HTML pour un ingredient
       let elt = document.querySelector(".bloc-search-resultat--ingredient");
       let li = Utils.creatEltHtml("li", "search-ingredient");
       li.title = "Cliquer içi pour rechercher par ce mot"
@@ -48,23 +48,22 @@ export default class Ingredient{
    doAddFiltreTags(li, filtre) {
       let sectionTag = document.querySelector(".filtre-tags");
       //condition pour ne pas afficher les tags dupliqués.
-      //On recupere la liste des tags.
-      let tagsListe = this.getIngredientTags();      
-      //On garde les tags qui respecte la condition :applique un filtre sur tagsListe(span) et 
+      //On récupère la liste des tags.
+      let tagsListe = this.getIngredientTags();
+      //On garde les tags qui respecte la condition currentTag.textContent) == Utils.toLawer(li.textContent)on appliquant un filtre sur tagsListe(span).
       tagsListe = tagsListe.filter(currentTag => Utils.toLawer(currentTag.textContent) == Utils.toLawer(li.textContent));
-      //si le tag existe dans l'array des tags(array retourné par la fonction )
+      //si le tag existe dans l'array des tags.
       if (tagsListe.length > 0) {
          //rien à faire
          return true
          //si non ajout du tag dans la liste des tags
-      } else {   
+      } else {
          //on crée la structure HTML de la liste des tags
          let tag = Utils.creatEltHtml("div", "tag " + filtre);
-         tag.innerHTML = `<span>${li.textContent}</span><i class="far fa-times-circle" title="Supprimer"></i>`;
+         tag.innerHTML = `<span class="tag-libelle">${li.textContent}</span><i class="far fa-times-circle" title="Supprimer"></i>`;
          sectionTag.appendChild(tag);
-         //......................
          this.doCloseTag(tag);
-         //..........................
+         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
          Utils.doRelanceRecherche();
       }
    }
@@ -74,8 +73,8 @@ export default class Ingredient{
     * cette fonction nous donne tags =tags selectionés - tags fermés 
     * @returns 
     */
-    getIngredientTags() {
-      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .ingredient span'));
+   getIngredientTags() {
+      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .ingredient span.tag-libelle'));
       return tagsListe;
    }
 
@@ -83,9 +82,9 @@ export default class Ingredient{
     * Fermer le tag cliqué
     * @param {Element} tag 
     */
-    doCloseTag(tag) {
+   doCloseTag(tag) {
       let icone = tag.querySelector('.far');
-      icone.addEventListener("click", event => {         
+      icone.addEventListener("click", event => {
          //supprimer l'element Tag.
          tag.remove();
          //Acualiser la recherche des recettes
@@ -97,7 +96,7 @@ export default class Ingredient{
       * Filtrer et afficher la liste des ingredients qui contiennent le mot saisi dans l'input .
       * @param {string} motSaisi 
       */
-    filterIngredients(motSaisi) {
+   filterIngredients(motSaisi) {
       let result = [];
       motSaisi = Utils.toLawer(motSaisi);
       //garder les ingredients(this.getIngredientTags()=array des ingredients) qui ont le mot saisi
@@ -108,7 +107,6 @@ export default class Ingredient{
       });
       // vider la liste des ingrédients
       document.querySelector(".bloc-search-resultat--ingredient").innerHTML = "";
-
       result.forEach(currentIngredient => {
          this.doAddIngredient(currentIngredient)
       })
@@ -116,10 +114,10 @@ export default class Ingredient{
 
    /**
     * Est ce que la recette contient les tags ingredients : true ou false.
-    * @param {*} recipe :La recette filtrée resultat de la recherche principale. 
+    * @param {*} recipe :La recette filtrée (currentRecipe dans la classe Recette)resultat de la recherche principale. 
     * @returns {boleen} true: si les recettes contiennent l'ensembles des tags ingredients electionnés.
     */
-    isRecipesHaseTagsIngredient(recipe) {
+   isRecipesHaseTagsIngredient(recipe) {
       //On crée une array à partir de la fonction getIngredientTags qui nous retourne tags=tagsselectionné-tags fermés
       //au lieu l'elt HTML '.filtre-tags .ingredient span' qui va nous donner tags = tags selectionés et va garder les tags fermés.
       let tagsListe = this.getIngredientTags();
@@ -144,5 +142,5 @@ export default class Ingredient{
       } else {
          return false;
       }
-   }  
+   }
 }

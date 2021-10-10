@@ -305,7 +305,7 @@ nav li {
   background-color: #ff6347;
   color: #FFFFFF;
   text-align: left;
-  box-shadow: 1 1 1 1;
+  box-shadow: 1px 1px 1px 1px;
 }
 
 .access-main {
