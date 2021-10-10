@@ -50,7 +50,7 @@ export default class Ingredient {
       //condition pour ne pas afficher les tags dupliqués.
       //On récupère la liste des tags.
       let tagsListe = this.getIngredientTags();
-      //On garde les tags qui respecte la condition currentTag.textContent) == Utils.toLawer(li.textContent)on appliquant un filtre sur tagsListe(span).
+      //On garde les tags qui respecte la condition li = currentTag dans l'array tagsListe
       tagsListe = tagsListe.filter(currentTag => Utils.toLawer(currentTag.textContent) == Utils.toLawer(li.textContent));
       //si le tag existe dans l'array des tags.
       if (tagsListe.length > 0) {
@@ -63,7 +63,7 @@ export default class Ingredient {
          tag.innerHTML = `<span class="tag-libelle">${li.textContent}</span><i class="far fa-times-circle" title="Supprimer"></i>`;
          sectionTag.appendChild(tag);
          this.doCloseTag(tag);
-         //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+         //lancer la recherche pour appliquer le filtre par tags sur le reste des recettes
          Utils.doRelanceRecherche();
       }
    }

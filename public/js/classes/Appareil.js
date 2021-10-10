@@ -49,7 +49,7 @@ export default class Appareil {
       this.appareils.sort();
       this.appareils.forEach(currentAppareil => {
          if (!motSaisi || Utils.toLawer(currentAppareil).includes(Utils.toLawer(motSaisi))) {
-            //afficher liste des appareils non dupliqués ,,,,,,,,,,,,,,,,,,,,,,,,,
+            //afficher liste des appareils non dupliqués 
             this.doAddAppareil(currentAppareil);
          }
       })
