@@ -8,22 +8,23 @@ import Ustensile from "./Ustensile.js";
 
 export default class Recipe {
    constructor(recipes) {
+      //Stocker les recettes du fichier json dans le variable de classe recipes
       this.recipes = recipes;
       //Instanciation des classes qui permettent de gérer les filtres et l'affichages des trois blocs de recherche avancée.
       this.ingredientObjet = new Ingredient();
       this.appareilObjet = new Appareil();
       this.ustensileObjet = new Ustensile();
       this.displayRecipes(recipes);
-      //Exécuter 'click' sur l'input dans la barre de recherche 
+      //Attacher evenement'saisi' sur l'input dans la barre de recherche 
       this.doAttachEventBarreRecherche();
-      //Executer "click" sur la flèche des 3 blocs de recherche.
+      //Attacher "click" sur la flèche des 3 blocs de recherche.
       this.doAttachClickToFiltre();
-      //Filtrer la liste des elts d'un bloc selon mot clé saisi dans les blocs de recherche avancée.
+      //Attacher "saisi" la liste des elts d'un bloc selon mot clé saisi dans les blocs de recherche avancée.
       this.doAttachSaisiInput();
    }
 
    /**
-    * Affiher les recettes (totalité des recettes ou bien recettes filtrées) à partir de recipes.js 
+    * Affiher les recettes (totalité des recettes ou bien recettes filtrées):
     * Afficher message si aucune recette ne contient le mot saisi.
     * On faits appelle aux fonctions doDisplayAppareil,doDisplayIngredient et doDisplayUstensiles 
     * pour afficher les listes des ing,app,ust dans les blocs de recherche avancée
@@ -36,7 +37,7 @@ export default class Recipe {
       document.querySelector(".bloc-search-resultat--ingredient").innerHTML = "";
       document.querySelector(".bloc-search-resultat--appareil").innerHTML = "";
       document.querySelector(".bloc-search-resultat--ustensiles").innerHTML = "";
-      //vider les arrays des tags déja définis dans les classes.
+      //vider  des listes déja définis dans les classes.
       this.ingredientObjet.ingredients = [];
       this.appareilObjet.appareils = [];
       this.ustensileObjet.ustensiles = [];
@@ -67,11 +68,9 @@ export default class Recipe {
          msg.innerHTML = `<p>Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>`;
          elt.append(msg)
       }
-      //aprés l'affichage de l'ensemble des recettes, on rempli les listes des blocs de recherche avancée...........
+      //aprés l'affichage de l'ensemble des recettes, on actualise les listes des blocs de recherche avancée.
       this.ingredientObjet.doDisplayIngredient();
-
       this.appareilObjet.doDisplayAppareil();
-      //Afficher les ustensiles dans le le bloc de recherche "ustensiles".
       this.ustensileObjet.doDisplayUstensiles();
 
    }
@@ -90,23 +89,23 @@ export default class Recipe {
       recipe.classList.add("recipe-card--selected");
    }
    /**
-    * Créer la structure HTML du bloc recette
-    * @param {array} recipes :data des recettes à
+    * Créer la structure HTML du bloc recette et alimente les listes des blocs de recherche avancée. 
+    * @param {array} recipe :data d'une recette à
     * @returns {HTMLElement} :structure bloc recette
     */
-   getTemplateRecipe(recipes) {
+   getTemplateRecipe(recipe) {
       //Elt vide en haut du bloc recette.
       let template = `<div class="recipe-card_header"></div> `
       //Elt ou sera affiché : titre + timer + temps.
       template += `
              <div class="title-time-recipe">
-                <p class="nom">${recipes.nom} </p>
-                <p class="temps"><i class="far fa-clock"></i> ${recipes.temps} min </p> 
+                <p class="nom">${recipe.nom} </p>
+                <p class="temps"><i class="far fa-clock"></i> ${recipe.temps} min </p> 
              </div>
              <div class="recipe-card_content">
              <div>`
       //Elt ou sera affiché les ingrédients dans card recette.
-      recipes.ingredients.forEach(currentIngredient => {
+      recipe.ingredients.forEach(currentIngredient => {
          //si l"unité" n'existe pas dans le data == rien à afficher (ne pas affiché undefined).
          let uniteValue = "";
          if (currentIngredient.unite) {
@@ -136,26 +135,26 @@ export default class Recipe {
       })
 
       //Ajouter les appareils non dupliqués dans le le bloc de recherche "appareil".
-      let currentAppareil = Utils.capitalizeFirstLetter(recipes.appareil);
+      let currentAppareil = Utils.capitalizeFirstLetter(recipe.appareil);
       if (currentAppareil) {
          if (!this.appareilObjet.appareils.includes(currentAppareil)) {
-            //alors ajout l'appareil dans le nouveau array des appareils non dupliqués
+            //alors ajout l'appareil dans l'array des appareils non dupliqués
             this.appareilObjet.appareils.push(currentAppareil);
          }
       }
       //Ajouter les ustensiles non dupliqués dans le le bloc de recherche "ustensiles".
-      recipes.ustensiles.forEach(currentUstensile => {
+      recipe.ustensiles.forEach(currentUstensile => {
          currentUstensile = Utils.capitalizeFirstLetter(currentUstensile);
          if (currentUstensile) {
             if (!this.ustensileObjet.ustensiles.includes(currentUstensile)) {
-               //alors ajout l'ustensile dans le nouveau array des ustensiles non dupliqués
+               //alors ajout l'ustensile dans l'array des ustensiles non dupliqués
                this.ustensileObjet.ustensiles.push(currentUstensile);
             }
          }
       });
       //Element ou sera affiché la description de la recette.
       template += `</div>
-          <p class="description textEllipsis">${recipes.description}</p>
+          <p class="description textEllipsis">${recipe.description}</p>
           </div>`;
       return template;
    }
@@ -185,11 +184,14 @@ export default class Recipe {
    filterRecipes(searchMot) {
       //Appliquer 1 er filtre: recettes filtrées par mot saisi si il existe
       let recipesFiltree = [];
+      //si le mot existe est il est >= 3
       if (searchMot && searchMot.length >= 3) {
          searchMot = Utils.toLawer(searchMot);
+         //alors on applique un filtre sur la recette et on return la recette filtrée si elle respecte
          recipesFiltree = this.recipes.filter(currentRecipe => {
             let nom = Utils.toLawer(currentRecipe.nom);
             let description = Utils.toLawer(currentRecipe.description);
+            //la condition :soit le mot existe  dans le nom ou bien la  description ou bien dans les ingredients. 
             if (nom.includes(searchMot) || description.includes(searchMot) || this.isIngredientsHaveMot(currentRecipe.ingredients, searchMot)) {
                // true = le mot existe dans la recette donc ajouter la recette dans recipesFiltree.
                return true;

@@ -52,7 +52,7 @@ export default class Ustensile {
    }
 
    /**
-    * Ajout d'un tag dans la section filtre/tag.
+    * Ajout d'un tag dans la section filtre/tag sous la barre de recherche principale.
     * @param {*} li 
     * @param {*} filtre =ingrédient,appareil ou ustentile c'est pour appliquer un style au tag 
     */
@@ -61,7 +61,7 @@ export default class Ustensile {
       //condition pour ne pas afficher les tags dupliqués.
       //On recupere la liste des tags.
       let tagsListe = this.getUstensileTags();
-      //On garde les tags qui respecte la condition li = currentTag ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      //On garde les tags qui respecte la condition li = currentTag dans l'array tagsListe
       tagsListe = tagsListe.filter(currentTag => Utils.toLawer(currentTag.textContent) == Utils.toLawer(li.textContent));
       //si le tag existe dans l'array des tags(array retourné par la fonction )
       if (tagsListe.length > 0) {
