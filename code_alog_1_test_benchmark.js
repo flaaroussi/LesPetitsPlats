@@ -26,7 +26,7 @@
 
     // fonction permet de cliquer sur le button (loup) pour lancer la recherche;;;;;;;;;;;;;;;;;;;;
    /**
-    * ???????????????????????????????????le click se declenche automatiquement sur la loupe qui permet de lancer le filtre et l'affichage.
+    * le click se declenche automatiquement sur la loupe qui permet de lancer le filtre et l'affichage.
     */
    static doRelanceRecherche(){
       document.getElementById("recherche_button").dispatchEvent(new Event('click'));
@@ -125,8 +125,7 @@ class Ingredient{
 class Appareil {
 
    constructor() {
-      //creer un array à partir de la liste des appareils des recettes filtrées
-      //dans la sous.............
+      
       this.appareils = [];
    }
 
@@ -217,7 +216,7 @@ class Ustensile{
       let resultat = [];
       //si ustensile existe dans le fichier parent js (recipes.js)
       if (recipe.ustensiles) {
-         //on applique le filtre::::::::::::::::::::::::::
+         //on applique le filtre
          resultat = recipe.ustensiles.filter(currentUstensile => {
             //Variable qui permet juste de savoir est ce que le tag existe dans l'ustensile.
             let stat = [];
@@ -254,20 +253,15 @@ class Recipe {
        this.ustensileObjet = new Ustensile();
        //Afficher les recettes
        //this.displayRecipes(recipes);
-       //Excuter 'click' à l' input dans la barre de recherche ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       //Excuter 'click' à l' input dans la barre de recherche 
        //this.doAttachEventBarreRecherche();
        //Executer evenement "click" sur la flèche des 3 blocs de recherche.
        //this.doAttachClickToFiltre();
        //Declencher la saisi dans les blocs de recherche avancée.
       // this.doAttachSaisiInput();
     }
-
-   
-   
- 
-       
-       /************************************************ */
-       /**?????????????????
+     
+       /**
         * Chercher le mot dans la liste des ingredients.
         * @param {*} ingredients array des ingrédients
         * @param {*} mot 
@@ -278,7 +272,7 @@ class Recipe {
           let resultat = ingredients.some(currentIngredient => Utils.toLawer(currentIngredient.ingredient).includes(mot));
           return resultat;
        }
-       /*****************************************************/
+       
        /**
         * Afficher les recettes filtrées "mot saisi recherche principale" ou par tags.
         * @param {String} searchMot : mot saisi
@@ -313,7 +307,7 @@ class Recipe {
                 return this.ingredientObjet.isRecipesHaseTagsIngredient(currentRecipe);
              })
           }
-          // Si la liste des "tags app" est sup à 0 alors ;;;;;;;;;;;;;;;;;;
+          // Si la liste des "tags app" est sup à 0 alors 
           if (this.appareilObjet.getAppareilTags().length > 0) {
              recipesFiltree = recipesFiltree.filter(currentRecipe => {
                 //on crée et on retourne une nouvelle array "recipesFiltree"  et on ajoute la recette qui contient le tag.
@@ -332,12 +326,6 @@ class Recipe {
           //this.displayRecipes(recipesFiltree);
           return recipesFiltree;
        }
- 
-       
- 
-       
- 
-       
     }
 
     const recipe = new Recipe(recipesData);

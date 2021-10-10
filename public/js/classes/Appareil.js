@@ -3,8 +3,7 @@ import Utils from "../utils/Utils.js";
 export default class Appareil {
 
    constructor() {
-      //creer un array à partir de la liste des appareils des recettes filtrées
-      //dans la sous.............
+      //Créer un array pour stocker la liste des appareils des recettes filtrées
       this.appareils = [];
    }
 
@@ -44,12 +43,12 @@ export default class Appareil {
     * Afficher les appareils(resultat recherche barre principale) dans les blocs de recherche avancée.
     */
    doDisplayAppareil() {
-       //si l'appareil existe dans le js 
+      //si l'appareil existe dans le js 
       let motSaisi = document.querySelector('.recherche-appareil').value;
       //On trier la liste par ordre
       this.appareils.sort();
-      this.appareils.forEach(currentAppareil =>{
-         if(!motSaisi || Utils.toLawer(currentAppareil).includes(Utils.toLawer(motSaisi))){
+      this.appareils.forEach(currentAppareil => {
+         if (!motSaisi || Utils.toLawer(currentAppareil).includes(Utils.toLawer(motSaisi))) {
             //afficher liste des appareils non dupliqués ,,,,,,,,,,,,,,,,,,,,,,,,,
             this.doAddAppareil(currentAppareil);
          }
@@ -66,24 +65,20 @@ export default class Appareil {
       //condition pour ne pas afficher les tags dupliqués.
       //On recupere la liste des tags.
       let tagsListe = this.getAppareilTags();
-      //On garde les tags qui respecte la condition :applique un filtre sur tagsListe(span) et 
+      //On garde les tags qui respecte la condition li= currentTag
       tagsListe = tagsListe.filter(currentTag => Utils.toLawer(currentTag.textContent) == Utils.toLawer(li.textContent));
-      //si li.textContent =elt selectionné est egal a currentTag.textContent=tag ;;;;;;;;;;;;;;;;;;;;;;;
       //si le tag existe dans l'array des tags(array retourné par la fonction )
       if (tagsListe.length > 0) {
          //rien à faire
          return true
-         //si non ajout du tag dans la liste des tags
+         //si non ajout du tag dans la liste des tags.
       } else {
          //on crée la structure HTML de la liste des tags
          let tag = Utils.creatEltHtml("div", "tag " + filtre);
-         tag.innerHTML = `<span>${li.textContent}</span><i class="far fa-times-circle"></i>`;
+         tag.innerHTML = `<span class="tag-libelle">${li.textContent}</span><i class="far fa-times-circle"></i>`;
          sectionTag.appendChild(tag);
-         //......................
          this.doCloseTag(tag);
-         //..........................
          Utils.doRelanceRecherche();
-         
       }
    }
 
@@ -93,7 +88,7 @@ export default class Appareil {
     * @returns {Array} liste des tags affichés
     */
    getAppareilTags() {
-      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .appareil span'));
+      let tagsListe = Array.from(document.querySelectorAll('.filtre-tags .appareil span.tag-libelle'));
       return tagsListe;
    }
 
@@ -129,11 +124,11 @@ export default class Appareil {
          //recip.appareil contient juste un seul elt donc si au moins un seul tag existe dans l'appareil
          //c-a-d le counter est > à 0
          if (counter.length > 0) {
-            //donc return true
             return true
          } else {
             return false;
          }
+         //si non si tagsListe.length = 0   
       } else {
          return true
       }
