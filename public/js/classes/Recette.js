@@ -89,7 +89,7 @@ export default class Recipe {
       recipe.classList.add("recipe-card--selected");
    }
    /**
-    * Créer la structure HTML du bloc recette et alimente les listes des blocs de recherche avancée. 
+    * Créer la structure HTML du bloc recette et alimenter les listes des blocs de recherche avancée. 
     * @param {array} recipe :data d'une recette à
     * @returns {HTMLElement} :structure bloc recette
     */
@@ -208,8 +208,9 @@ export default class Recipe {
 
       //si au moins un tag ingredient existe(this.getIngredientTags()=tags selectionnés-tags fermés)
       if (this.ingredientObjet.getIngredientTags().length > 0) {
+         //on crée et on retourne une nouvelle array "recipesFiltree"  et on ajoute la recette qui contient le tag.
          recipesFiltree = recipesFiltree.filter(currentRecipe => {
-            //on crée et on retourne une nouvelle array "recipesFiltree"  et on ajoute la recette qui contient le tag.
+            // true = recette contient les tags
             return this.ingredientObjet.isRecipesHaseTagsIngredient(currentRecipe);
          })
       }

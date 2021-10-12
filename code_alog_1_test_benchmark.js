@@ -1,6 +1,4 @@
  class Utils {
-
-
    static toLawer(texte){
       if(texte){
          return texte.toLowerCase();
@@ -8,42 +6,31 @@
          return  "";
       }
    }
-      
-      
    static creatEltHtml(tagName, classTag){
       let tag = document.createElement(tagName);
       tag.className = classTag;
       
       return tag;
    }
-
    static capitalizeFirstLetter(string) {
       if(string){
          return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
       }
 
     }
-
-    // fonction permet de cliquer sur le button (loup) pour lancer la recherche;;;;;;;;;;;;;;;;;;;;
    /**
     * le click se declenche automatiquement sur la loupe qui permet de lancer le filtre et l'affichage.
     */
    static doRelanceRecherche(){
       document.getElementById("recherche_button").dispatchEvent(new Event('click'));
    }
-
 }
 
 class Ingredient{
-
    constructor(){
       //creer une array à partir de la liste des ingrédients des recettes filtrées
       this.ingredients = [];
    }
-
-  
-   
- 
    /**
     * Retourne la liste des tags ingrédients selectionnés
     * cette fonction nous donne tags =tags selectionés - tags fermés 
@@ -128,10 +115,6 @@ class Appareil {
       
       this.appareils = [];
    }
-
-
-  
-
    /**
     * Retourne la liste des tags appareilsaffichés sous la barre principale.
     * cette fonction nous donne tags =tags selectionés - tags fermés 
@@ -191,11 +174,6 @@ class Ustensile{
      //creer un array à partir de la liste des ustensiles des recettes filtrées
      this.ustensiles = []; 
    }
-
-   
-
-
-
    /**
     * Retourne la liste des tag usetensiles selectionnés
     * cette fonction nous donne tags =tags selectionés - tags fermés 
