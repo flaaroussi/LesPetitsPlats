@@ -34,7 +34,7 @@ Afin de tester la fonctionnalité de recherche principale, un benchmark à été
 
 # Outils
    * Visual Studio Code
-   * Git
+   * Git (versionning du code)
    * ESLint (Validation et analyse du qualité du code avec Eslint )
    
 
