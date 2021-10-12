@@ -135,6 +135,7 @@ export default class Ingredient {
          //si "stat" est non vide alors return true
          return (stat.length);
       })
+
       //si le nbre de tags selectionnés est égal au nbre d'ingredients alors la recette doit etre affichée.
       // return (resultat.length == tagsListe.length) ? true : false;
       if (resultat.length == tagsListe.length) {
