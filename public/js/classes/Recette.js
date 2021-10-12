@@ -265,7 +265,7 @@ export default class Recipe {
 
       /*Appliquer 2 eme filtre: Filtrer les recettes  par tags s'il y en a */
       //si au moins un tag ingredient existe(this.getIngredientTags()=tags selectionnés-tags fermés)
-      if (this.ingredientObjet.getIngredientTags().length >= 0) {
+      if (this.ingredientObjet.getIngredientTags().length > 0) {
          // Nouveau algorithme 2
          let totalRecipes = recipesFiltree.length;
          //tableau intermédiare qui stock uniquement les recettes qui contiennet les tags
@@ -290,7 +290,7 @@ export default class Recipe {
       }
 
       // Si la liste des "tags appareils" est sup à 0 alors rechecher les recettes qui contient les tags appareils.
-      if (this.appareilObjet.getAppareilTags().length >= 0) {
+      if (this.appareilObjet.getAppareilTags().length > 0) {
          //Nouveau algorithme 2
          let totalRecipes = recipesFiltree.length;
          //tableau intermédiare qui stock uniquement les recettes qui contiennet les tags
@@ -312,7 +312,7 @@ export default class Recipe {
          */
       }
       // Si la liste des "tags ustensiles" est sup à 0 alors rechecher les recettes qui contient les tags appareils.
-      if (this.ustensileObjet.getUstensileTags().length >= 0) {
+      if (this.ustensileObjet.getUstensileTags().length > 0) {
          //Nouveau algorithme 2
          let totalRecipes = recipesFiltree.length;
          let resultatFiltreTags = []
