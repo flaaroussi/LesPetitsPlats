@@ -1,6 +1,6 @@
 
 ## LesPetitsPlats
-Une application web de recherche des recettes de cuisine, les utilisateurs pouvent chercher des recettes en rapport avec des ingrédients, des ustensiles et des équipements.
+Une application web de recherche performante et rapide des recettes de cuisine, les utilisateurs pouvent chercher des recettes en rapport avec des ingrédients, des ustensiles et des équipements.
 
 ## Besoin
 Un véritable moteur de recherche de recettes de cuisine multicritère.
