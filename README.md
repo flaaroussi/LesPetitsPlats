@@ -1,9 +1,10 @@
-## A propos
 
-Projet n°7 réalisé dans le cadre de ma formation *Developpeur Front-end* au sein de l'école OpenClassRooms
+## LesPetitsPlats
+Une application web de recherche des recettes de cuisine, les utilisateurs pouvent chercher des recettes en rapport avec des ingrédients, des ustensiles et des équipements.
 
-## Présentation du projet
-Les petits plats est une application web de recherche des recettes de cuisine, les utilisateurs pouvent chercher de recettes en rapport avec des ingrédients, des ustensiles et des équipements.
+## Besoin
+Un véritable moteur de recherche de recettes de cuisine multicritère.
+Possiblité de rechercher par ingrédient, ustentil ou appareil.
 
 ## Lien pour tester l'application
 
