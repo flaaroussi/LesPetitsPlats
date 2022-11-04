@@ -8,7 +8,7 @@ Possiblité de rechercher par ingrédient, ustentil ou appareil.
 
 ## Lien pour tester l'application
 
-<a href="https://flaaroussi.github.io/FaizaLaaroussi_7_30082021">https://flaaroussi.github.io/FaizaLaaroussi_7_30082021</a>
+<a href="https://flaaroussi.github.io/FaizaLaaroussi_7_30082021">https://flaaroussi.github.io/LesPetitsPlats</a>
 
 ## Benchmark
 Afin de tester la fonctionnalité de recherche principale, un benchmark à été effectué sur les deux algorithmes
